@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5110352}
   - component: {fileID: 5110353}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 84663863}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 84663862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.014, z: 0}
+  m_LocalPosition: {x: 0, y: -0.989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -585,6 +585,8 @@ GameObject:
   - component: {fileID: 440737938}
   - component: {fileID: 440737937}
   - component: {fileID: 440737939}
+  - component: {fileID: 440737941}
+  - component: {fileID: 440737940}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
@@ -1747,12 +1749,134 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_CompositeOperation: 0
+  m_CompositeOperation: 1
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!50 &440737940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440737935}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &440737941
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440737935}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 440737939}
+    m_ColliderPaths:
+    - - X: 270000000
+        Y: 60000000
+      - X: 170000000
+        Y: 60000000
+      - X: 170000000
+        Y: 50000000
+      - X: 270000000
+        Y: 50000000
+    - - X: 230000000
+        Y: 40000000
+      - X: 120000000
+        Y: 40000000
+      - X: 120000000
+        Y: 30000000
+      - X: 230000000
+        Y: 30000000
+    - - X: 160000000
+        Y: 20000000
+      - X: 60000000
+        Y: 20000000
+      - X: 60000000
+        Y: 10000000
+      - X: 160000000
+        Y: 10000000
+    - - X: 170000000
+        Y: -10000000
+      - X: -170000000
+        Y: -10000000
+      - X: -170000000
+        Y: -30000000
+      - X: 170000000
+        Y: -30000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 26.999971, y: 5}
+      - {x: 26.999971, y: 6}
+      - {x: 17, y: 5.999971}
+      - {x: 17.000029, y: 5}
+    - - {x: 22.999971, y: 3}
+      - {x: 22.999971, y: 4}
+      - {x: 12, y: 3.999971}
+      - {x: 12.00003, y: 3}
+    - - {x: 15.999971, y: 1}
+      - {x: 15.999971, y: 2}
+      - {x: 6, y: 1.9999708}
+      - {x: 6.000029, y: 1}
+    - - {x: 16.999971, y: -3}
+      - {x: 16.999971, y: -1}
+      - {x: -17, y: -1.0000293}
+      - {x: -16.999971, y: -3}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 440737935}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2222,13 +2346,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1733205014}
   - component: {fileID: 1733205013}
+  - component: {fileID: 1733205021}
   - component: {fileID: 1733205019}
   - component: {fileID: 1733205020}
   - component: {fileID: 1733205015}
   - component: {fileID: 1733205018}
   - component: {fileID: 1733205017}
   - component: {fileID: 1733205016}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2299,7 +2424,7 @@ Transform:
   m_GameObject: {fileID: 1733205011}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.095942944, y: 2.43, z: 0}
+  m_LocalPosition: {x: -0.12, y: 2.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2354,7 +2479,19 @@ MonoBehaviour:
     m_ActionId: 6ec647b2-a1c5-4287-8f99-c28ed221c967
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1733205020}
+        m_TargetAssemblyTypeName: InputSystem.PlayerMovement, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 528ddf60-5c7e-4dde-b3aa-1459c54c6c9b
     m_ActionName: 'Player/Fire[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -2555,9 +2692,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1e6d5ec9ddfa74b9d386b31b57bb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
+  m_JumpForce: 400
   m_CrouchSpeed: 0.4
-  m_MovementSmoothing: 0.05
+  m_MovementSmoothing: 0
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
@@ -2565,6 +2702,7 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 84663863}
   m_CeilingCheck: {fileID: 1932869015}
   m_CrouchDisableCollider: {fileID: 1733205017}
+  m_Grounded: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -2585,6 +2723,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1733205019}
   speed: 20
+--- !u!114 &1733205021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733205011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec7bb9d2e140a444896bf111d2709dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfBullet: {fileID: 2152041994026172489, guid: ad1ab827ec27de241b5f09f41b6e22d2, type: 3}
 --- !u!1 &1932869014
 GameObject:
   m_ObjectHideFlags: 0
@@ -2594,7 +2745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1932869015}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ceiling Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2610,7 +2761,7 @@ Transform:
   m_GameObject: {fileID: 1932869014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.013, z: 0}
+  m_LocalPosition: {x: 0, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
