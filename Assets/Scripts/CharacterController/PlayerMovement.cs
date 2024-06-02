@@ -2,7 +2,7 @@ using Shooting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace InputSystem
+namespace CharacterController
 {
     public class PlayerMovement : MonoBehaviour
     {
@@ -11,14 +11,21 @@ namespace InputSystem
 
         private Vector2 _input;
         private float _horizontalMovement;
+        
         private bool _isJumpPressed;
         private bool _isCrouchPressed;
-
+        private bool _isPrimaryFirePressed;
+        private bool _isSecondaryFirePressed;
+        private bool _isCombinedFirePressed;
+        private bool _wasCombinedFirePressed;
+        
         private PlayerShootProjectiles _playerShootProjectiles;
+        private Style _style;
 
-        private void Start()
+        private void Awake()
         {
             _playerShootProjectiles = GetComponent<PlayerShootProjectiles>();
+            _style = GetComponent<Style>();
         }
         
         private void FixedUpdate()
@@ -32,12 +39,52 @@ namespace InputSystem
             _horizontalMovement = _input.x * speed;
         }
 
-        public void OnShoot(InputAction.CallbackContext context)
+        public void OnPrimaryShoot(InputAction.CallbackContext context)
         {
-            if (!context.started) return;
-            _playerShootProjectiles.Shoot();
+            _isPrimaryFirePressed = context.ReadValueAsButton();
+            _isCombinedFirePressed = _isPrimaryFirePressed && _isSecondaryFirePressed;
+            
+            if (context.started && _isCombinedFirePressed)
+            {
+                _playerShootProjectiles.Shoot(TypeOfFire.CombinedFire);
+                _wasCombinedFirePressed = true;
+            }
+            else switch (context.canceled & !_isSecondaryFirePressed)
+            {
+                case true when _wasCombinedFirePressed:
+                    _wasCombinedFirePressed = false;
+                    break;
+                case true when !_wasCombinedFirePressed:
+                    _playerShootProjectiles.Shoot(TypeOfFire.PrimaryFire);
+                    break;
+            }
         }
-        
+
+        public void OnSecondaryShoot(InputAction.CallbackContext context)
+        {
+            _isSecondaryFirePressed = context.ReadValueAsButton();
+            _isCombinedFirePressed = _isPrimaryFirePressed && _isSecondaryFirePressed;
+
+            if (context.started && _isCombinedFirePressed)
+            {
+                _playerShootProjectiles.Shoot(TypeOfFire.CombinedFire);
+                _wasCombinedFirePressed = true;
+            }
+            else switch (context.canceled && !_isPrimaryFirePressed)
+            {
+                case true when _wasCombinedFirePressed:
+                    _wasCombinedFirePressed = false;
+                    break;
+                case true when !_wasCombinedFirePressed:
+                    _playerShootProjectiles.Shoot(TypeOfFire.SecondaryFire);
+                    break;
+            }
+        }
+
+        public void OnFirstStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.FirstStyle;
+        public void OnSecondStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.SecondStyle;
+        public void OnThirdStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.ThirdStyle;
+
         public void OnJump(InputAction.CallbackContext context) => _isJumpPressed = context.ReadValueAsButton();
         public void OnCrouch(InputAction.CallbackContext context) => _isCrouchPressed = context.ReadValueAsButton();
     }
