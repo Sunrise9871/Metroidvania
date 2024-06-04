@@ -4,19 +4,25 @@ namespace Shooting
 {
     public class Bullet : MonoBehaviour
     {
+        [SerializeField] private new ParticleSystem particleSystem;
         [Tooltip("Скорость полета projectile.")]
         [SerializeField] private float moveSpeed = 10f;
         [Tooltip("Время до уничтожения projectile в секундах.")]
         [SerializeField] private float timeToDestroy = 5f;
-        
+
+        private Rigidbody2D _rb;
+
         /// <summary>
         /// <para>Устанавливает направление движения projectile и запускает его.</para>
         /// </summary>
         /// <param name="shootDirection">Направление движения/</param>
         public void Setup(Vector3 shootDirection)
         {
-            var rb = GetComponent<Rigidbody2D>();
-            rb.AddForce(shootDirection * moveSpeed, ForceMode2D.Impulse);
+            _rb = GetComponent<Rigidbody2D>();
+            _rb.AddForce(shootDirection * moveSpeed, ForceMode2D.Impulse);
+
+            particleSystem = GetComponent<ParticleSystem>();
+            
             Destroy(gameObject, timeToDestroy);
         }
         
@@ -26,7 +32,11 @@ namespace Shooting
             var target = other.GetComponent<Target>();
             if (!target) return;
             target.Damage();
-            Destroy(gameObject);
+            
+            _rb.Sleep();
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+            particleSystem.Play();
         }
     }
 }
