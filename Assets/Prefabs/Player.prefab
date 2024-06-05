@@ -197,9 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec7bb9d2e140a444896bf111d2709dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfPrimaryBullet: {fileID: 2152041994026172489, guid: ad1ab827ec27de241b5f09f41b6e22d2, type: 3}
-  pfSecondaryBullet: {fileID: 5813944537980433613, guid: 3da531f6e2085824283a8f69de2501bd, type: 3}
-  pfCombinedBullet: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+  pfPrimaryBullet: {fileID: 9058211033506258246, guid: ad1ab827ec27de241b5f09f41b6e22d2, type: 3}
+  pfSecondaryBullet: {fileID: 5506790354202994878, guid: 3da531f6e2085824283a8f69de2501bd, type: 3}
+  pfCombinedBullet: {fileID: 6004791117637299997, guid: e23e368515ee808458693ee1361a3358, type: 3}
 --- !u!114 &6275413514468499902
 MonoBehaviour:
   m_ObjectHideFlags: 0

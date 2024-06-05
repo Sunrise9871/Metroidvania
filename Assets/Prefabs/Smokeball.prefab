@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -9001197823026601900}
   - component: {fileID: -5644593305760601470}
   - component: {fileID: -3597279604598014525}
+  - component: {fileID: 6328800320883035944}
   m_Layer: 0
   m_Name: Smokeball
   m_TagString: Untagged
@@ -102,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c46daa734609d545b08d86d574f1689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleSystemGameObject: {fileID: 6915748438715188314, guid: ebaa43bf8be7f3e438273b817e8eb349, type: 3}
   moveSpeed: 10
   timeToDestroy: 5
 --- !u!61 &-5644593305760601470
@@ -138,17 +140,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.40266132, y: 0.005268991}
+  m_Offset: {x: -0.0045096874, y: -0.0077258945}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.6920172, y: 0.5151024}
     oldSize: {x: 1, y: 1}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.0360622, y: 0.88220537}
+  m_Size: {x: 0.41231108, y: 0.21513784}
   m_EdgeRadius: 0
 --- !u!50 &-3597279604598014525
 Rigidbody2D:
@@ -177,3 +179,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &6328800320883035944
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004791117637299997}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7bcdee9bd521ddb479d5d98153120836, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
