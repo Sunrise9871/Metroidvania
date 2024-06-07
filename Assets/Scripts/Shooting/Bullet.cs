@@ -1,46 +1,97 @@
 using System;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityEngine.Rendering.Universal;
 
 namespace Shooting
 {
+    /// <summary>
+    ///   <para>Класс для projectile снарядов, используемые игроком.</para>
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(ParticleSystem))]
+    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Bullet : MonoBehaviour
     {
-        [Tooltip("Объект с particle system, создающийся при попадании.")] [SerializeField]
-        private GameObject particleSystemGameObject;
-
         [Tooltip("Скорость полета projectile.")] [SerializeField]
         private float moveSpeed = 10f;
-
         [Tooltip("Время до уничтожения projectile в секундах.")] [SerializeField]
         private float timeToDestroy = 5f;
+        
+        private ObjectPool<Bullet> _pool; //Ссылка на object pool
+        private Action _onReleaseBullet; //Локальная функция с действиями при возврате в object pool
 
-        private Action _onReachTarget;
-
+        private ParticleSystem _particleSystemGameObject;
+        private BoxCollider2D _collider;
         private Rigidbody2D _rb;
+        private SpriteRenderer _spriteRenderer;
+        private Light2D _light;
+
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<BoxCollider2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _particleSystemGameObject = GetComponent<ParticleSystem>();
+            _light = GetComponent<Light2D>();
+        }
 
         /// <summary>
-        /// <para>Устанавливает направление движения projectile и запускает его.</para>
+        ///   <para>Устанавливает направление движения projectile и запускает его.</para>
         /// </summary>
         /// <param name="transformPosition">Позиция создания</param>
         /// <param name="transformRotation">Поворот во время создания</param>
         /// <param name="shootDirection">Направление движения/</param>
-        /// <param name="onReachTarget"></param>
+        /// <param name="onReleaseBullet">Локальная функция с действиями после возврата в object pool</param>
         public void Setup(Vector3 transformPosition, Quaternion transformRotation, Vector3 shootDirection,
-            Action onReachTarget)
+            Action onReleaseBullet)
         {
+            //Задание позиции
             transform.position = transformPosition;
             transform.rotation = transformRotation;
 
-            _rb = GetComponent<Rigidbody2D>();
+            //Придание силы по направлению
             _rb.AddForce(shootDirection * moveSpeed, ForceMode2D.Impulse);
 
-            _onReachTarget = onReachTarget;
+            //Локальная функция с действиями при возврате в object pool
+            _onReleaseBullet = onReleaseBullet;
 
-            //TODO: pool
             //Уничтожение по таймеру
-            //Destroy(gameObject, timeToDestroy);
+            Invoke(nameof(ReleaseProjectile), timeToDestroy);
         }
 
+        /// <summary>
+        ///   <para>Указывает ссылку на object pool для объекта.</para>
+        /// </summary>
+        /// <param name="pool">Ссылка на object pool</param>
+        public void SetPool(ObjectPool<Bullet> pool) => _pool = pool;
+
+        /// <summary>
+        ///   <para>Возвращает ссылку на object pool для объекта.</para>
+        /// </summary>
+        /// <returns>Ссылка на object pool</returns>
+        public ObjectPool<Bullet> GetPool() => _pool;
+
+        /// <summary>
+        ///   <para>Вызывается при вызове из object pool.</para>
+        /// </summary>
+        private void OnEnable()
+        {
+            _collider.enabled = true;
+            _spriteRenderer.enabled = true;
+            if (_light) _light.enabled = true;
+        }
+
+        /// <summary>
+        ///   <para>Возвращает projectile в object pool.</para>
+        /// </summary>
+        private void ReleaseProjectile() => _onReleaseBullet();
+
+        /// <summary>
+        ///   <para>Действия при столкновении с объектом.</para>
+        /// </summary>
+        /// <param name="other">Объект, с которым столкнулись</param>
         private void OnTriggerEnter2D(Collider2D other)
         {
             //Проверка попадания в цель
@@ -50,13 +101,20 @@ namespace Shooting
             //Нанесение урона цели
             target.Damage();
 
-            //Создание партиклов
-            //TODO: POOL
-            var particles = Instantiate(particleSystemGameObject, gameObject.transform);
-            particles.transform.SetParent(transform.parent, true);
+            //Скрытие projectile
+            CancelInvoke(nameof(ReleaseProjectile)); //Отмена уничтожения projectile по таймауту
+            _collider.enabled = false;
+            _spriteRenderer.enabled = false;
+            if (_light) _light.enabled = false;
+            _rb.Sleep();
 
-            //Уничтожение projectile
-            _onReachTarget();
+            //Запуск particle system
+            _particleSystemGameObject.Play();
         }
+
+        /// <summary>
+        ///   <para>Когда заканчивается анимация particle system, projectile возвращается в object pool.</para>
+        /// </summary>
+        private void OnParticleSystemStopped() => ReleaseProjectile();
     }
 }
