@@ -1,4 +1,5 @@
 using System;
+using CustomUnityPools;
 using UnityEngine;
 
 namespace Shooting
@@ -14,15 +15,15 @@ namespace Shooting
         [SerializeField] private GameObject pfCombinedBullet;
         
         //Object pool-ы для префабов
-        private CustomUnityPool.BulletSpawner _primaryPool;
-        private CustomUnityPool.BulletSpawner _secondaryPool;
-        private CustomUnityPool.BulletSpawner _combinedPool;
+        private BulletSpawner _primaryPool;
+        private BulletSpawner _secondaryPool;
+        private BulletSpawner _combinedPool;
         
         private void Awake()
         {
-            _primaryPool = new CustomUnityPool.BulletSpawner(pfPrimaryBullet);
-            _secondaryPool = new CustomUnityPool.BulletSpawner(pfSecondaryBullet);
-            _combinedPool = new CustomUnityPool.BulletSpawner(pfCombinedBullet);
+            _primaryPool = new BulletSpawner(pfPrimaryBullet);
+            _secondaryPool = new BulletSpawner(pfSecondaryBullet);
+            _combinedPool = new BulletSpawner(pfCombinedBullet);
         }
         
         /// <summary>

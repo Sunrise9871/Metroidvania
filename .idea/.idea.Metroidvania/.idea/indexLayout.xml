@@ -2,7 +2,11 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders />
-    <explicitIncludes />
-    <explicitExcludes />
+    <explicitIncludes>
+      <Path>Assets/Settings</Path>
+    </explicitIncludes>
+    <explicitExcludes>
+      <Path>Assets/AstarPathfindingProject</Path>
+    </explicitExcludes>
   </component>
 </project>
