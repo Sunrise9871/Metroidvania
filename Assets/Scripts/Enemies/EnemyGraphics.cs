@@ -12,7 +12,6 @@ namespace Enemies
         private void Start()
         {
             aiPath = GetComponent<AIPath>();
-            
         }
 
         private void Update()

@@ -8,17 +8,18 @@ namespace CharacterController
     {
         [SerializeField] private CharacterController2D controller;
         [SerializeField] private float speed;
+        [SerializeField] private float jumpForce;
 
         private Vector2 _input;
         private float _horizontalMovement;
-        
+
         private bool _isJumpPressed;
         private bool _isCrouchPressed;
         private bool _isPrimaryFirePressed;
         private bool _isSecondaryFirePressed;
         private bool _isCombinedFirePressed;
         private bool _wasCombinedFirePressed;
-        
+
         private PlayerShootProjectiles _playerShootProjectiles;
         private Style _style;
 
@@ -27,10 +28,11 @@ namespace CharacterController
             _playerShootProjectiles = GetComponent<PlayerShootProjectiles>();
             _style = GetComponent<Style>();
         }
-        
+
         private void FixedUpdate()
         {
             controller.Move(_horizontalMovement * Time.fixedDeltaTime, _isCrouchPressed, _isJumpPressed);
+            _isJumpPressed = false;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -43,21 +45,22 @@ namespace CharacterController
         {
             _isPrimaryFirePressed = context.ReadValueAsButton();
             _isCombinedFirePressed = _isPrimaryFirePressed && _isSecondaryFirePressed;
-            
+
             if (context.started && _isCombinedFirePressed)
             {
                 _playerShootProjectiles.Shoot(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
             }
-            else switch (context.canceled & !_isSecondaryFirePressed)
-            {
-                case true when _wasCombinedFirePressed:
-                    _wasCombinedFirePressed = false;
-                    break;
-                case true when !_wasCombinedFirePressed:
-                    _playerShootProjectiles.Shoot(TypeOfFire.PrimaryFire);
-                    break;
-            }
+            else
+                switch (context.canceled & !_isSecondaryFirePressed)
+                {
+                    case true when _wasCombinedFirePressed:
+                        _wasCombinedFirePressed = false;
+                        break;
+                    case true when !_wasCombinedFirePressed:
+                        _playerShootProjectiles.Shoot(TypeOfFire.PrimaryFire);
+                        break;
+                }
         }
 
         public void OnSecondaryShoot(InputAction.CallbackContext context)
@@ -70,22 +73,29 @@ namespace CharacterController
                 _playerShootProjectiles.Shoot(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
             }
-            else switch (context.canceled && !_isPrimaryFirePressed)
-            {
-                case true when _wasCombinedFirePressed:
-                    _wasCombinedFirePressed = false;
-                    break;
-                case true when !_wasCombinedFirePressed:
-                    _playerShootProjectiles.Shoot(TypeOfFire.SecondaryFire);
-                    break;
-            }
+            else
+                switch (context.canceled && !_isPrimaryFirePressed)
+                {
+                    case true when _wasCombinedFirePressed:
+                        _wasCombinedFirePressed = false;
+                        break;
+                    case true when !_wasCombinedFirePressed:
+                        _playerShootProjectiles.Shoot(TypeOfFire.SecondaryFire);
+                        break;
+                }
         }
 
         public void OnFirstStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.FirstStyle;
         public void OnSecondStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.SecondStyle;
         public void OnThirdStyle(InputAction.CallbackContext context) => _style.CurrentStyle = TypeOfStyle.ThirdStyle;
 
-        public void OnJump(InputAction.CallbackContext context) => _isJumpPressed = context.ReadValueAsButton();
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (context.started)
+                _isJumpPressed = true;
+        }
+            
+
         public void OnCrouch(InputAction.CallbackContext context) => _isCrouchPressed = context.ReadValueAsButton();
     }
 }

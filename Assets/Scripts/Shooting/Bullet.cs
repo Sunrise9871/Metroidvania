@@ -79,6 +79,7 @@ namespace Shooting
         /// </summary>
         private void OnEnable()
         {
+            gameObject.isStatic = false;
             _collider.enabled = true;
             _spriteRenderer.enabled = true;
             if (_light) _light.enabled = true;
@@ -111,6 +112,7 @@ namespace Shooting
 
             //Запуск particle system
             _particleSystemGameObject.Play();
+            gameObject.isStatic = true;
         }
 
         /// <summary>
