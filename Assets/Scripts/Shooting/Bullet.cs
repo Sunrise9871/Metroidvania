@@ -13,21 +13,28 @@ namespace Shooting
     [RequireComponent(typeof(ParticleSystem))]
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Animator))]
     public class Bullet : MonoBehaviour
     {
         [Tooltip("Скорость полета projectile.")] [SerializeField]
         private float moveSpeed = 10f;
+
         [Tooltip("Время до уничтожения projectile в секундах.")] [SerializeField]
         private float timeToDestroy = 5f;
-        
+
         private ObjectPool<Bullet> _pool; //Ссылка на object pool
         private Action _onReleaseBullet; //Локальная функция с действиями при возврате в object pool
+
+        #region Components For Disable/Enable
 
         private ParticleSystem _particleSystemGameObject;
         private BoxCollider2D _collider;
         private Rigidbody2D _rb;
         private SpriteRenderer _spriteRenderer;
         private Light2D _light;
+        private Animator _animator;
+
+        #endregion
 
         private void Awake()
         {
@@ -36,6 +43,7 @@ namespace Shooting
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _particleSystemGameObject = GetComponent<ParticleSystem>();
             _light = GetComponent<Light2D>();
+            _animator = GetComponent<Animator>();
         }
 
         /// <summary>
@@ -83,6 +91,7 @@ namespace Shooting
             _collider.enabled = true;
             _spriteRenderer.enabled = true;
             if (_light) _light.enabled = true;
+            _animator.enabled = true;
         }
 
         /// <summary>
@@ -109,6 +118,7 @@ namespace Shooting
             _spriteRenderer.enabled = false;
             if (_light) _light.enabled = false;
             _rb.Sleep();
+            _animator.enabled = false;
 
             //Запуск particle system
             _particleSystemGameObject.Play();
