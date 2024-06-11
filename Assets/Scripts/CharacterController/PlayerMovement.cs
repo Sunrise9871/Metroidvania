@@ -8,7 +8,6 @@ namespace CharacterController
     {
         [SerializeField] private CharacterController2D controller;
         [SerializeField] private float speed;
-        [SerializeField] private float jumpForce;
 
         private Vector2 _input;
         private float _horizontalMovement;

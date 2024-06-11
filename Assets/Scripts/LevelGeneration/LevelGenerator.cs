@@ -11,44 +11,58 @@ namespace LevelGeneration
         [SerializeField] private Transform redZone;
         [SerializeField] private Transform lastPlatformPosition;
         [SerializeField] private float checkLevelRepeatTime;
+        
+        [Tooltip("Насколько ниже должна быть платформа по сравнению с red zone")]
+        [SerializeField] private float redZoneDifference;
+        [SerializeField] private int minX, maxX, minY, maxY;
 
         private Queue<Transform> _activePlatformsQueue;
         private const float MIN_DISTANCE_TO_SPAWN_PLATFORM = 20f;
-
+        
         private void Start()
         {
             _activePlatformsQueue = new Queue<Transform>();
             InvokeRepeating(nameof(GenerateLevel), 0f, checkLevelRepeatTime);
         }
 
+        /// <summary>
+        /// Когда генерировать или удалять платформы
+        /// </summary>
         private void GenerateLevel()
         {
-            if (_activePlatformsQueue.Count > 0)
-                while (_activePlatformsQueue.Peek().position.y < redZone.transform.position.y)
+            //Если red zone выше платформы, то удалить платформу
+            while (_activePlatformsQueue.TryPeek(out var highestPlatform))
+                if (highestPlatform.position.y < redZone.transform.position.y - redZoneDifference)
                     DestroyLowestPlatform();
-            
-            //TODO: убрать перегруз
+                else break;
+
+            //Если игрок приближается к самой высокой платформе, то создать еще платформу
+            if (!lastPlatformPosition) return;
             while (Vector3.Distance(player.position, lastPlatformPosition.position) <
                    MIN_DISTANCE_TO_SPAWN_PLATFORM)
-            {
-                var newPosition = new Vector3(
-                    lastPlatformPosition.position.x + Random.Range(-6, 8),
-                    lastPlatformPosition.position.y + Random.Range(3, 7),
-                    lastPlatformPosition.position.z);
-
-                lastPlatformPosition = SpawnPlatform(newPosition);
-                _activePlatformsQueue.Enqueue(lastPlatformPosition);
-            }
+                SpawnPlatform();
         }
 
-        private void DestroyLowestPlatform()
-        {
-            Destroy(_activePlatformsQueue.Dequeue().gameObject);
-        }
+        /// <summary>
+        /// Удаление самой низкой платформы
+        /// </summary>
+        private void DestroyLowestPlatform() => Destroy(_activePlatformsQueue.Dequeue().gameObject);
 
-        private Transform SpawnPlatform(Vector3 position)
+        /// <summary>
+        /// Создание платформы на новой позиции
+        /// </summary>
+        private void SpawnPlatform()
         {
-            return Instantiate(platforms[0], position, Quaternion.identity, gameObject.transform).transform;
+            //Вычисление новой позиции для платформы
+            var newPosition = new Vector3(
+                lastPlatformPosition.position.x + Random.Range(minX, maxX),
+                lastPlatformPosition.position.y + Random.Range(minY, maxY),
+                lastPlatformPosition.position.z);
+
+            //Выбор и создание случайного префаба платформы
+            lastPlatformPosition = Instantiate(platforms[Random.Range(0, platforms.Count)], newPosition,
+                Quaternion.identity, gameObject.transform).transform;
+            _activePlatformsQueue.Enqueue(lastPlatformPosition);
         }
     }
 }

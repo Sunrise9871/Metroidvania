@@ -1761,7 +1761,7 @@ Tilemap:
       e10: 0
       e11: 1
       e12: 0
-      e13: 0
+      e13: -2.1068048
       e20: 0
       e21: 0
       e22: 1
@@ -1769,6 +1769,24 @@ Tilemap:
       e30: 0
       e31: 0
       e32: 0
+      e33: 1
+  - m_RefCount: 0
+    m_Data:
+      e00: -2.1714186e-10
+      e01: 1.19e-43
+      e02: -9.441951e+19
+      e03: 0
+      e10: 4.9e-44
+      e11: 6e-45
+      e12: 4.5914e-41
+      e13: 0
+      e20: 7.2279e-41
+      e21: 0
+      e22: -2.1714164e-10
+      e23: 0
+      e30: 0
+      e31: 7.34684e-40
+      e32: 4.9e-44
       e33: 1
   m_TileColorArray:
   - m_RefCount: 168
@@ -1883,7 +1901,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 44.08544, y: 3.9976244}
+  m_Offset: {x: 44.08544, y: 1.86}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
