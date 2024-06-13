@@ -7,6 +7,7 @@ namespace LevelGeneration
 {
     public class LevelGenerator : MonoBehaviour
     {
+        [Tooltip("Список платформ для генерации уровня")]
         [SerializeField] private List<GameObject> platforms;
         [SerializeField] private Transform player;
         [SerializeField] private Transform redZone;
@@ -29,7 +30,7 @@ namespace LevelGeneration
         }
 
         /// <summary>
-        /// Когда генерировать или удалять платформы
+        ///   <para>Когда генерировать или удалять платформы</para>
         /// </summary>
         private void GenerateLevel()
         {
@@ -46,12 +47,12 @@ namespace LevelGeneration
         }
 
         /// <summary>
-        /// Удаление самой низкой платформы
+        ///   <para>Удаление самой низкой платформы</para>
         /// </summary>
         private void DestroyLowestPlatform() => Destroy(_activePlatformsQueue.Dequeue().gameObject);
 
         /// <summary>
-        /// Создание платформы на новой позиции
+        ///   <para>Создание платформы на новой позиции</para>
         /// </summary>
         private void SpawnPlatform()
         {
