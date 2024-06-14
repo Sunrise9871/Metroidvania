@@ -25,7 +25,7 @@ namespace Shooting
         private ObjectPool<Bullet> _pool; //Ссылка на object pool
         private Action _onReleaseBullet; //Локальная функция с действиями при возврате в object pool
 
-        #region Components For Disable/Enable
+        #region Компоненты для OnDisable/OnEnable
 
         private ParticleSystem _particleSystemGameObject;
         private BoxCollider2D _collider;

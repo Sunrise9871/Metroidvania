@@ -1,27 +1,23 @@
-using System;
 using UnityEngine;
-using Pathfinding;
-using UnityEngine.Serialization;
 
 namespace Enemies
 {
     public class EnemyGraphics : MonoBehaviour
     {
-        [SerializeField] private AIPath aiPath;
+        private EnemyMovement _enemyMovement;
 
-        private void Start()
-        {
-            aiPath = GetComponent<AIPath>();
-        }
+        private readonly Vector3 _leftSideSprite = new(-1f, 1f, 1f);
+        private readonly Vector3 _rightSideSprite = new(1f, 1f, 1f);
 
-        private void Update()
+        private void Awake() => _enemyMovement = GetComponent<EnemyMovement>();
+        private void OnEnable() => _enemyMovement.OnNewDestinationSet += SetSpriteSide;
+        private void OnDisable() => _enemyMovement.OnNewDestinationSet -= SetSpriteSide;
+
+        private void SetSpriteSide(Transform destination)
         {
-            transform.localScale = aiPath.desiredVelocity.x switch
-            {
-                >= 0.01f => new Vector3(-1f, 1f, 1f),
-                <= 0.01f => new Vector3(1f, 1f, 1f),
-                _ => transform.localScale
-            };
+            transform.localScale = destination.position.x < transform.position.x
+                ? _leftSideSprite
+                : _rightSideSprite;
         }
     }
 }
