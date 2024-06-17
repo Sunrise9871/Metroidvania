@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.Rendering.Universal;
 
-namespace Shooting
+namespace Shooting.Bullets
 {
     /// <summary>
     ///   <para>Класс для projectile снарядов, используемые игроком.</para>
@@ -14,7 +14,7 @@ namespace Shooting
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
-    public class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour
     {
         [Tooltip("Скорость полета projectile.")] [SerializeField]
         private float moveSpeed = 10f;
@@ -107,10 +107,7 @@ namespace Shooting
         {
             //Проверка попадания в цель
             var target = other.GetComponent<Target>();
-            if (!target) return;
-
-            //Нанесение урона цели
-            target.Damage();
+            SendDamage(target);
 
             //Скрытие projectile
             CancelInvoke(nameof(ReleaseProjectile)); //Отмена уничтожения projectile по таймауту
@@ -124,6 +121,8 @@ namespace Shooting
             _particleSystemGameObject.Play();
             gameObject.isStatic = true;
         }
+
+        protected abstract void SendDamage(Target target);
 
         /// <summary>
         ///   <para>Когда заканчивается анимация particle system, projectile возвращается в object pool.</para>

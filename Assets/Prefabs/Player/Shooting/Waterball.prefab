@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c46daa734609d545b08d86d574f1689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystemGameObject: {fileID: 6915748438715188314, guid: 293f8fdf1172dda44acfcf24822b50bc, type: 3}
   moveSpeed: 10
   timeToDestroy: 5
 --- !u!212 &6882837810254861476
@@ -134,10 +133,10 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0

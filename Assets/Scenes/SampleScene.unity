@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 139425677}
   - component: {fileID: 139425676}
   - component: {fileID: 139425679}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -2607,7 +2607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6074213009351178459, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: firstDestination
