@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   timeToDestroy: 5
+  typeOfFire: 1
 --- !u!212 &6882837810254861476
 SpriteRenderer:
   m_ObjectHideFlags: 0

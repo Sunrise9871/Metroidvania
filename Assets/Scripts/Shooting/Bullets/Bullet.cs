@@ -14,13 +14,16 @@ namespace Shooting.Bullets
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
-    public abstract class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour
     {
         [Tooltip("Скорость полета projectile.")] [SerializeField]
         private float moveSpeed = 10f;
 
         [Tooltip("Время до уничтожения projectile в секундах.")] [SerializeField]
         private float timeToDestroy = 5f;
+
+        [Tooltip("Тип огня.")] [SerializeField]
+        private TypeOfFire typeOfFire;
 
         private ObjectPool<Bullet> _pool; //Ссылка на object pool
         private Action _onReleaseBullet; //Локальная функция с действиями при возврате в object pool
@@ -106,9 +109,9 @@ namespace Shooting.Bullets
         private void OnTriggerEnter2D(Collider2D other)
         {
             //Проверка попадания в цель
-            var target = other.GetComponent<Target>();
-            SendDamage(target);
-
+            var enemy = other.GetComponent<Enemy>();
+            SendDamage(enemy);
+            
             //Скрытие projectile
             CancelInvoke(nameof(ReleaseProjectile)); //Отмена уничтожения projectile по таймауту
             _collider.enabled = false;
@@ -122,7 +125,11 @@ namespace Shooting.Bullets
             gameObject.isStatic = true;
         }
 
-        protected abstract void SendDamage(Target target);
+        /// <summary>
+        ///   <para>Отправляет тип projectile скрипту врага</para>
+        /// </summary>
+        /// <param name="enemy"></param>
+        private void SendDamage(Enemy enemy) => enemy.ReceiveDamage(typeOfFire);
 
         /// <summary>
         ///   <para>Когда заканчивается анимация particle system, projectile возвращается в object pool.</para>

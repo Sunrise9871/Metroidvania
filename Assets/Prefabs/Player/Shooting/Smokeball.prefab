@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   timeToDestroy: 5
+  typeOfFire: 2
 --- !u!61 &-5644593305760601470
 BoxCollider2D:
   m_ObjectHideFlags: 0
