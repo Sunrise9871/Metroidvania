@@ -9,30 +9,32 @@ namespace LevelGeneration
     {
         [Tooltip("Список платформ для генерации уровня")]
         [SerializeField] private List<GameObject> platforms;
+
         [SerializeField] private Transform player;
         [SerializeField] private Transform redZone;
         [SerializeField] private Transform lastPlatform;
         [SerializeField] private float checkLevelRepeatTime;
-        
+
         [Tooltip("Насколько ниже должна быть платформа по сравнению с red zone")]
         [SerializeField] private float redZoneDifference;
+
         [SerializeField] private int minX, maxX, minY, maxY;
 
         private Queue<Transform> _activePlatformsQueue;
-        private const float MIN_DISTANCE_TO_SPAWN_PLATFORM = 20f;
-        
+        private const float MIN_DISTANCE_TO_SPAWN_PLATFORM = 80f;
+
         public static Action<Transform> OnPlatformSpawned;
-        
+
         private void Awake()
         {
             _activePlatformsQueue = new Queue<Transform>();
-            InvokeRepeating(nameof(GenerateLevel), 0f, checkLevelRepeatTime);
+            InvokeRepeating(nameof(ManageLevel), 0f, checkLevelRepeatTime);
         }
 
         /// <summary>
         ///   <para>Когда генерировать или удалять платформы</para>
         /// </summary>
-        private void GenerateLevel()
+        private void ManageLevel()
         {
             //Если red zone выше платформы, то удалить платформу
             while (_activePlatformsQueue.TryPeek(out var lowestPlatform))
@@ -63,10 +65,11 @@ namespace LevelGeneration
                 lastPlatform.position.z);
 
             //Выбор и создание случайного префаба платформы
-            lastPlatform = Instantiate(platforms[Random.Range(0, platforms.Count)], newPosition,
-                Quaternion.identity, gameObject.transform).transform;
+            var randomPlatformPrefab = platforms[Random.Range(0, platforms.Count)];
+            lastPlatform = Instantiate(randomPlatformPrefab, newPosition, Quaternion.identity, gameObject.transform)
+                .transform;
             _activePlatformsQueue.Enqueue(lastPlatform);
-            
+
             OnPlatformSpawned?.Invoke(lastPlatform);
         }
     }

@@ -70,7 +70,7 @@ namespace Shooting.Bullets
             _onReleaseBullet = onReleaseBullet;
 
             //Уничтожение по таймеру
-            Invoke(nameof(ReleaseProjectile), timeToDestroy);
+            Invoke(nameof(HideProjectile), timeToDestroy);
         }
 
         /// <summary>
@@ -111,9 +111,13 @@ namespace Shooting.Bullets
             //Проверка попадания в цель
             var enemy = other.GetComponent<Enemy>();
             SendDamage(enemy);
-            
-            //Скрытие projectile
             CancelInvoke(nameof(ReleaseProjectile)); //Отмена уничтожения projectile по таймауту
+            HideProjectile();
+        }
+
+        private void HideProjectile()
+        {
+            //Скрытие projectile
             _collider.enabled = false;
             _spriteRenderer.enabled = false;
             if (_light) _light.enabled = false;

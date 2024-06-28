@@ -128,8 +128,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5936428352355524001}
   - component: {fileID: 6450645641446771554}
+  - component: {fileID: 3590619436048488049}
   - component: {fileID: 7404704090366271723}
-  - component: {fileID: 6074213009351178459}
   - component: {fileID: 8367243918269056848}
   - component: {fileID: 5415293377737913826}
   m_Layer: 7
@@ -211,6 +211,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3590619436048488049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749660125968653695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfdea4416101465984dcbd3a39c5d70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
 --- !u!114 &7404704090366271723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,18 +241,6 @@ MonoBehaviour:
   minHeightForNewDestination: 8
   jumpHeight: 5
   jumpDuration: 2
---- !u!114 &6074213009351178459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8749660125968653695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 173f543616094cc1b63f3c03efb0958d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8367243918269056848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,10 +279,10 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0

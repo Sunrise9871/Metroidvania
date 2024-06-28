@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6328800320883035944}
   - component: {fileID: -8937282123081715035}
   - component: {fileID: -8174398394888136423}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Smokeball
   m_TagString: Untagged
   m_Icon: {fileID: 0}

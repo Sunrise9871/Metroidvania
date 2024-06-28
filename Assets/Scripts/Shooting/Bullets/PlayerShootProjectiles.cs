@@ -18,12 +18,15 @@ namespace Shooting
         private BulletSpawner _primaryPool;
         private BulletSpawner _secondaryPool;
         private BulletSpawner _combinedPool;
+
+        private Camera _camera;
         
         private void Awake()
         {
             _primaryPool = new BulletSpawner(pfPrimaryBullet);
             _secondaryPool = new BulletSpawner(pfSecondaryBullet);
             _combinedPool = new BulletSpawner(pfCombinedBullet);
+            _camera = Camera.main;
         }
         
         /// <summary>
@@ -31,10 +34,8 @@ namespace Shooting
         /// </summary>
         public void Shoot(TypeOfFire typeOfFire)
         {
-            if (!Camera.main) return;
-
             // Позиция курсора в мировых координатах
-            var cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var cursorPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
             // Обнулить z координату
             cursorPosition.z = transform.position.z;
             // Вычислить направление от позиции игрока к позиции курсора

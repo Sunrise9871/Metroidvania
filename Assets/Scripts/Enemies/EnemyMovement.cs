@@ -8,24 +8,37 @@ namespace Enemies
 {
     public class EnemyMovement : MonoBehaviour
     {
-        [Tooltip("Первое место назначения")] 
+        [Tooltip("Первое место назначения")]
         [SerializeField] private Transform firstDestination;
-        [Tooltip("Ноги персонажа (для точных приземлений)")] 
+
+        [Tooltip("Ноги персонажа (для точных приземлений)")]
         [SerializeField] private Transform feet;
-        [Tooltip("Новое место назначения для прыжка выше текущего не менее, чем на ...")] 
+
+        [Tooltip("Transform игрока")]
+        [SerializeField] private Transform player;
+
+        [Tooltip("Новое место назначения для прыжка выше текущего не менее, чем на ...")]
         [SerializeField] private float minHeightForNewDestination = 8f;
+
         [Tooltip("Сила эффекта параболического прыжка")]
         [SerializeField] private float jumpHeight = 5f;
+
         [Tooltip("Длительность прыжка")]
         [SerializeField] private float jumpDuration = 0.5f;
-        
+
+        [Tooltip("Нормальная скорость при расстоянии от игрока в...")]
+        [SerializeField] private float normalDistance = 15f;
+
         private Queue<Transform> _paths; // Очередь путей для врага
+
+        private const float MAXIMUM_ACCELERATION = 2f;
+        private const float MINIMUM_ACCELERATION = 0.5f;
 
         /// <summary>
         ///   <para>Враг получил новое место назначение.</para>
         /// </summary>
         public Action<Transform> OnNewDestinationSet;
-        
+
         private void Awake()
         {
             _paths = new Queue<Transform>();
@@ -35,11 +48,10 @@ namespace Enemies
         private void OnDisable() => LevelGenerator.OnPlatformSpawned -= AddNewSpawnedPlatform;
 
         private void Start() => StartCoroutine(Jump(firstDestination));
-        
+
         /// <summary>
-        ///   <para>Добавляет новую созданную на уровне платформу.</para>
+        ///   <para>Добавляет новую созданную на уровне платформу в очередь.</para>
         /// </summary>
-        /// <param name="spawnedPlatform"></param>
         private void AddNewSpawnedPlatform(Transform spawnedPlatform) => _paths.Enqueue(spawnedPlatform);
 
         /// <summary>
@@ -47,15 +59,22 @@ namespace Enemies
         /// </summary>
         private void SetNewDestinationFromQueue()
         {
-            // Пока есть пути в очереди
             while (_paths.TryDequeue(out var destination))
             {
-                // Выбор нового места назначения, который выше не менее чем на minHeightForNewDestination
                 if (destination.position.y - transform.position.y < minHeightForNewDestination) continue;
                 OnNewDestinationSet(destination);
                 StartCoroutine(Jump(destination));
-                break;
+                return;
             }
+        }
+
+        /// <summary>
+        ///   <para>Возвращает модификатор скорости для врага на основе расстояния до игрока.</para>
+        /// </summary>
+        private float CalculateAcceleration()
+        {
+            var acceleration = normalDistance / Math.Abs(transform.position.y - player.position.y);
+            return Mathf.Clamp(acceleration, MINIMUM_ACCELERATION, MAXIMUM_ACCELERATION);
         }
 
         /// <summary>
@@ -65,12 +84,12 @@ namespace Enemies
         private IEnumerator Jump(Transform destination)
         {
             var startPosition = transform.position;
+            var adjustedJumpDuration = jumpDuration / CalculateAcceleration();
 
-            // Время прыжка от 0 до elapsedTime
-            for (float jumpTime = 0; jumpTime < jumpDuration; jumpTime += Time.deltaTime)
+            for (float jumpTime = 0; jumpTime < adjustedJumpDuration; jumpTime += Time.deltaTime)
             {
                 // Прогресс прыжка от 0 до 1 (как проценты)
-                var jumpProgress = jumpTime / jumpDuration;
+                var jumpProgress = jumpTime / adjustedJumpDuration;
                 // Высчитывание эффекта параболического прыжка
                 var height = Mathf.Sin(Mathf.PI * jumpProgress) * jumpHeight;
                 // Перемещение от точки А до Б + эффект параболического прыжка
@@ -78,7 +97,7 @@ namespace Enemies
                                      + new Vector3(0, height, 0);
                 yield return null;
             }
-            
+
             // Ожидание следующего места для прыжка
             SetNewDestinationFromQueue();
         }
