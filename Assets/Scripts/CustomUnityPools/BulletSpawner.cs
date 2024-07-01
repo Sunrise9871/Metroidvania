@@ -1,5 +1,4 @@
-﻿using Shooting;
-using Shooting.Bullets;
+﻿using Shooting.Bullets;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -13,14 +12,14 @@ namespace CustomUnityPools
         private readonly ObjectPool<Bullet> _pool;
         private readonly GameObject _prefab;
         
-        private const int DEFAULT_CAPACITY = 20;
-        private const int MAX_SIZE = 100;
+        private const int DefaultCapacity = 20;
+        private const int MaxSize = 100;
 
         public BulletSpawner(GameObject prefab)
         {
             _prefab = prefab;
             _pool = new ObjectPool<Bullet>(OnCreateGameObject, OnGetGameObject, OnReleaseGameObject,
-                OnDestroyGameObject, false, DEFAULT_CAPACITY, MAX_SIZE);
+                OnDestroyGameObject, false, DefaultCapacity, MaxSize);
         }
         
         /// <summary>

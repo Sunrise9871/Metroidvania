@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Enemies.EnemyStates;
 using Shooting;
+using Shooting.Bullets;
 using UnityEngine;
 
 namespace Enemies

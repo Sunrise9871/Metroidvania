@@ -1,4 +1,4 @@
-﻿namespace Shooting
+﻿namespace Shooting.Bullets
 {
     /// <summary>
     /// Типы выстрелов игрока.

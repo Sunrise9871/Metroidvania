@@ -2,7 +2,7 @@ using System;
 using CustomUnityPools;
 using UnityEngine;
 
-namespace Shooting
+namespace Shooting.Bullets
 {
     /// <summary>
     ///   <para>Класс, отвечающий за запуск projectile от игрока.</para>

@@ -31,19 +31,17 @@ namespace Enemies
 
         private Queue<Transform> _paths; // Очередь путей для врага
 
-        private const float MAXIMUM_ACCELERATION = 2f;
-        private const float MINIMUM_ACCELERATION = 0.5f;
+        private const float MaximumAcceleration = 2f;
+        private const float MinimumAcceleration = 0.5f;
 
         /// <summary>
         ///   <para>Враг получил новое место назначение.</para>
         /// </summary>
-        public Action<Transform> OnNewDestinationSet;
+        public event Action<Transform> NewDestinationSet;
 
-        private void Awake()
-        {
-            _paths = new Queue<Transform>();
-            LevelGenerator.OnPlatformSpawned += AddNewSpawnedPlatform;
-        }
+        private void Awake() => _paths = new Queue<Transform>();
+
+        private void OnEnable() => LevelGenerator.OnPlatformSpawned += AddNewSpawnedPlatform;
 
         private void OnDisable() => LevelGenerator.OnPlatformSpawned -= AddNewSpawnedPlatform;
 
@@ -62,7 +60,7 @@ namespace Enemies
             while (_paths.TryDequeue(out var destination))
             {
                 if (destination.position.y - transform.position.y < minHeightForNewDestination) continue;
-                OnNewDestinationSet(destination);
+                NewDestinationSet?.Invoke(destination);
                 StartCoroutine(Jump(destination));
                 return;
             }
@@ -74,7 +72,7 @@ namespace Enemies
         private float CalculateAcceleration()
         {
             var acceleration = normalDistance / Math.Abs(transform.position.y - player.position.y);
-            return Mathf.Clamp(acceleration, MINIMUM_ACCELERATION, MAXIMUM_ACCELERATION);
+            return Mathf.Clamp(acceleration, MinimumAcceleration, MaximumAcceleration);
         }
 
         /// <summary>

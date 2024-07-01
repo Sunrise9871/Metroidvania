@@ -21,7 +21,7 @@ namespace LevelGeneration
         [SerializeField] private int minX, maxX, minY, maxY;
 
         private Queue<Transform> _activePlatformsQueue;
-        private const float MIN_DISTANCE_TO_SPAWN_PLATFORM = 80f;
+        private const float MinDistanceToSpawnPlatform = 80f;
 
         public static Action<Transform> OnPlatformSpawned;
 
@@ -44,7 +44,7 @@ namespace LevelGeneration
 
             //Если игрок приближается к самой высокой платформе, то создать еще платформу
             if (!lastPlatform) return;
-            while (lastPlatform.position.y < player.position.y + MIN_DISTANCE_TO_SPAWN_PLATFORM)
+            while (lastPlatform.position.y < player.position.y + MinDistanceToSpawnPlatform)
                 SpawnPlatform();
         }
 
