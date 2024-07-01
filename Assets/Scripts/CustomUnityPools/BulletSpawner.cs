@@ -37,7 +37,7 @@ namespace CustomUnityPools
         private Bullet OnCreateGameObject()
         {
             var script = Object.Instantiate(_prefab).GetComponent<Bullet>(); //Скрипт созданного объекта
-            script.SetPool(_pool); //Передача ссылки на object pool созданному объекту
+            script.SetPool(this); //Передача ссылки на object pool созданному объекту
             return script;
         }
 

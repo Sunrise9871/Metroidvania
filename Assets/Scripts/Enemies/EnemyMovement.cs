@@ -8,6 +8,9 @@ namespace Enemies
 {
     public class EnemyMovement : MonoBehaviour
     {
+        private const float MaximumAcceleration = 2f;
+        private const float MinimumAcceleration = 0.5f;
+        
         [Tooltip("Первое место назначения")]
         [SerializeField] private Transform firstDestination;
 
@@ -30,9 +33,6 @@ namespace Enemies
         [SerializeField] private float normalDistance = 15f;
 
         private Queue<Transform> _paths; // Очередь путей для врага
-
-        private const float MaximumAcceleration = 2f;
-        private const float MinimumAcceleration = 0.5f;
 
         /// <summary>
         ///   <para>Враг получил новое место назначение.</para>
@@ -71,8 +71,10 @@ namespace Enemies
         /// </summary>
         private float CalculateAcceleration()
         {
-            var acceleration = normalDistance / Math.Abs(transform.position.y - player.position.y);
-            return Mathf.Clamp(acceleration, MinimumAcceleration, MaximumAcceleration);
+            var acceleration = normalDistance / (transform.position.y - player.position.y);
+            return acceleration < 0
+                ? MaximumAcceleration
+                : Mathf.Clamp(acceleration, MinimumAcceleration, MaximumAcceleration);
         }
 
         /// <summary>
@@ -96,7 +98,7 @@ namespace Enemies
                 yield return null;
             }
 
-            // Ожидание следующего места для прыжка
+            // Установка следующего места для прыжка
             SetNewDestinationFromQueue();
         }
     }

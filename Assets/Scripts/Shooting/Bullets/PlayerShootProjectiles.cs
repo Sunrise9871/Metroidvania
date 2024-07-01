@@ -21,7 +21,7 @@ namespace Shooting.Bullets
 
         private Camera _camera;
         
-        private void Awake()
+        private void Start()
         {
             _primaryPool = new BulletSpawner(pfPrimaryBullet);
             _secondaryPool = new BulletSpawner(pfSecondaryBullet);
@@ -40,7 +40,7 @@ namespace Shooting.Bullets
             cursorPosition.z = transform.position.z;
             // Вычислить направление от позиции игрока к позиции курсора
             var direction = cursorPosition - transform.position;
-            // Угол в градусах
+            // Вычисление угла в градусах
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             var rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
@@ -55,11 +55,13 @@ namespace Shooting.Bullets
             
             //Инициализация снаряда
             bulletScript.Setup(transform.position, rotation, direction.normalized,
-                OnReleaseBullet);
-            return;
-
-            //Возвращение projectile в свой object pool
-            void OnReleaseBullet() => bulletScript.GetPool().Release(bulletScript);
+                () => OnReleaseBullet(bulletScript));
         }
+        
+        /// <summary>
+        /// Обработчик события для возвращения projectile в pool
+        /// </summary>
+        /// <param name="bulletScript">Скрипт projectile</param>
+        private void OnReleaseBullet(Bullet bulletScript) => bulletScript.GetPool().Release(bulletScript);
     }
 }

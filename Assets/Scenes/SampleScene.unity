@@ -2528,7 +2528,7 @@ PrefabInstance:
       objectReference: {fileID: 366887983}
     - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: jumpDuration

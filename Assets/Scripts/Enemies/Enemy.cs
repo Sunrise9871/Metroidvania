@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using Enemies.EnemyStates;
-using Shooting;
 using Shooting.Bullets;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDamageable
     {
         [Tooltip("Количество очков здоровья")]
         [SerializeField] private float health;

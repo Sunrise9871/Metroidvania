@@ -1,7 +1,7 @@
 using System;
+using CustomUnityPools;
 using Enemies;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.Rendering.Universal;
 
 namespace Shooting.Bullets
@@ -16,17 +16,17 @@ namespace Shooting.Bullets
     [RequireComponent(typeof(Animator))]
     public class Bullet : MonoBehaviour
     {
-        [Tooltip("Скорость полета projectile.")] [SerializeField]
-        private float moveSpeed = 10f;
+        [Tooltip("Скорость полета projectile.")]
+        [SerializeField] private float moveSpeed = 10f;
 
-        [Tooltip("Время до уничтожения projectile в секундах.")] [SerializeField]
-        private float timeToDestroy = 5f;
+        [Tooltip("Время до уничтожения projectile в секундах.")]
+        [SerializeField] private float timeToDestroy = 5f;
 
-        [Tooltip("Тип огня.")] [SerializeField]
-        private TypeOfFire typeOfFire;
+        [Tooltip("Тип огня.")]
+        [SerializeField] private TypeOfFire typeOfFire;
 
-        private ObjectPool<Bullet> _pool; //Ссылка на object pool
-        private Action _onReleaseBullet; //Локальная функция с действиями при возврате в object pool
+        private BulletSpawner _pool; //Ссылка на object pool
+        private Action _releaseAction; //Локальная функция с действиями при возврате в object pool
 
         #region Компоненты для OnDisable/OnEnable
 
@@ -67,7 +67,7 @@ namespace Shooting.Bullets
             _rb.AddForce(shootDirection * moveSpeed, ForceMode2D.Impulse);
 
             //Локальная функция с действиями при возврате в object pool
-            _onReleaseBullet = onReleaseBullet;
+            _releaseAction = onReleaseBullet;
 
             //Уничтожение по таймеру
             Invoke(nameof(HideProjectile), timeToDestroy);
@@ -77,13 +77,13 @@ namespace Shooting.Bullets
         ///   <para>Указывает ссылку на object pool для объекта.</para>
         /// </summary>
         /// <param name="pool">Ссылка на object pool</param>
-        public void SetPool(ObjectPool<Bullet> pool) => _pool = pool;
+        public void SetPool(BulletSpawner pool) => _pool = pool;
 
         /// <summary>
         ///   <para>Возвращает ссылку на object pool для объекта.</para>
         /// </summary>
         /// <returns>Ссылка на object pool</returns>
-        public ObjectPool<Bullet> GetPool() => _pool;
+        public BulletSpawner GetPool() => _pool;
 
         /// <summary>
         ///   <para>Вызывается при вызове из object pool.</para>
@@ -100,7 +100,7 @@ namespace Shooting.Bullets
         /// <summary>
         ///   <para>Возвращает projectile в object pool.</para>
         /// </summary>
-        private void ReleaseProjectile() => _onReleaseBullet();
+        private void ReleaseProjectile() => _releaseAction();
 
         /// <summary>
         ///   <para>Действия при столкновении с объектом.</para>
@@ -111,7 +111,7 @@ namespace Shooting.Bullets
             //Проверка попадания в цель
             var enemy = other.GetComponent<Enemy>();
             SendDamage(enemy);
-            CancelInvoke(nameof(ReleaseProjectile)); //Отмена уничтожения projectile по таймауту
+            CancelInvoke(nameof(HideProjectile)); //Отмена уничтожения projectile по таймауту
             HideProjectile();
         }
 
@@ -130,10 +130,10 @@ namespace Shooting.Bullets
         }
 
         /// <summary>
-        ///   <para>Отправляет тип projectile скрипту врага</para>
+        ///   <para>Отправляет тип projectile скрипту цели</para>
         /// </summary>
-        /// <param name="enemy"></param>
-        private void SendDamage(Enemy enemy) => enemy.ReceiveDamage(typeOfFire);
+        /// <param name="target"></param>
+        private void SendDamage(IDamageable target) => target.ReceiveDamage(typeOfFire);
 
         /// <summary>
         ///   <para>Когда заканчивается анимация particle system, projectile возвращается в object pool.</para>
