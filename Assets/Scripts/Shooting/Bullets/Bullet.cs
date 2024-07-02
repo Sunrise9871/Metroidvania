@@ -109,8 +109,8 @@ namespace Shooting.Bullets
         private void OnTriggerEnter2D(Collider2D other)
         {
             //Проверка попадания в цель
-            var enemy = other.GetComponent<Enemy>();
-            SendDamage(enemy);
+            var target = other.GetComponent<IDamageable>();
+            SendDamage(target);
             CancelInvoke(nameof(HideProjectile)); //Отмена уничтожения projectile по таймауту
             HideProjectile();
         }

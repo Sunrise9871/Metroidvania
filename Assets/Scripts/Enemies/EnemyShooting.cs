@@ -21,22 +21,26 @@ namespace Enemies
         private void Start()
         {
             _bulletPool = new BulletSpawner(pfBullet);
+            StartCoroutine(nameof(Shoot));
         }
 
         private IEnumerator Shoot()
         {
-            // Вычислить направление от позиции врага к позиции игрока
-            var direction = player.position - transform.position;
-            // Угол в градусах
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            var rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        
-            var bulletScript = _bulletPool.Get();
-            
-            //Инициализация снаряда
-            bulletScript.Setup(transform.position, rotation, direction.normalized,
-                () => OnReleaseBullet(bulletScript));
-            yield return new WaitForSeconds(shootingFrequency);
+            while (true)
+            {
+                // Вычислить направление от позиции врага к позиции игрока
+                var direction = player.position - transform.position;
+                // Угол в градусах
+                var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                var rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+                var bulletScript = _bulletPool.Get();
+
+                //Инициализация снаряда
+                bulletScript.Setup(transform.position, rotation, direction.normalized,
+                    () => OnReleaseBullet(bulletScript));
+                yield return new WaitForSeconds(shootingFrequency);
+            }
         }
         
         /// <summary>

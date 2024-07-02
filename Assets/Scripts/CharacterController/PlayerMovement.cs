@@ -1,3 +1,4 @@
+using System;
 using Shooting.Bullets;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,6 +23,9 @@ namespace CharacterController
         private PlayerShootProjectiles _playerShootProjectiles;
         private Style _style;
 
+        public event Action PlayerMoved;
+        public event Action PlayerIdled;
+
         private void Awake()
         {
             _playerShootProjectiles = GetComponent<PlayerShootProjectiles>();
@@ -38,6 +42,10 @@ namespace CharacterController
         {
             _input = context.ReadValue<Vector2>();
             _horizontalMovement = _input.x * speed;
+            if (context.started)
+                PlayerMoved?.Invoke();
+            else if (context.canceled)
+                PlayerIdled?.Invoke();
         }
 
         public void OnPrimaryShoot(InputAction.CallbackContext context)
