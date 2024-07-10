@@ -14,10 +14,7 @@ GameObject:
   - component: {fileID: 6275413514468499902}
   - component: {fileID: 8222116610374934521}
   - component: {fileID: 8480953535973470231}
-  - component: {fileID: 3526037874050826864}
   - component: {fileID: 2718217333686590187}
-  - component: {fileID: 3211954555644312646}
-  - component: {fileID: 9103641186513541582}
   - component: {fileID: 8971327000525221782}
   m_Layer: 3
   m_Name: Player
@@ -39,7 +36,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5153640442272401433}
   - {fileID: 5086640135586943883}
   - {fileID: 8931400458633765395}
   m_Father: {fileID: 0}
@@ -84,22 +80,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1e6d5ec9ddfa74b9d386b31b57bb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 1500
-  m_CrouchSpeed: 0.4
-  m_MovementSmoothing: 0
-  m_AirControl: 1
-  m_WhatIsGround:
+  movementSmoothing: 0.05
+  horizontalSpeed: 400
+  jumpForce: 1500
+  airControl: 1
+  whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  m_GroundCheck: {fileID: 5086640135586943883}
-  m_CeilingCheck: {fileID: 5153640442272401433}
-  m_CrouchDisableCollider: {fileID: 3211954555644312646}
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnCrouchEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  groundCheck: {fileID: 5086640135586943883}
 --- !u!114 &8222116610374934521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,210 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2603ed356a6889409ae48d680c8048b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 6275413514468499902}
-  speed: 40
---- !u!114 &3526037874050826864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567236174352486868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 0b688622d81b4a049ac11c1b4b3e5216, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: InputSystem.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4823d3e9-c014-48e0-9803-4bb5a3976955
-    m_ActionName: 'Player/Move[/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6ec647b2-a1c5-4287-8f99-c28ed221c967
-    m_ActionName: 'Player/Look[/Mouse/delta]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: InputSystem.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnPrimaryShoot
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 528ddf60-5c7e-4dde-b3aa-1459c54c6c9b
-    m_ActionName: 'Player/Fire[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: InputSystem.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7f55a406-5f0b-45bb-b4f8-ae298fe28f85
-    m_ActionName: 'Player/JumpUp[/Keyboard/w,/Keyboard/upArrow]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: InputSystem.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnCrouch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 688bc955-75b8-46dd-9dfb-74f94fb2c407
-    m_ActionName: 'Player/JumpOff[/Keyboard/s,/Keyboard/downArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fefb5ef6-23fe-425a-b85f-9b2f1dbc44d1
-    m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5e6f8516-d341-4ebd-98f3-521159b7641b
-    m_ActionName: 'UI/Submit[/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8616a52d-9941-4c10-95c8-cac6885d6a8e
-    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 243345d7-203c-4f58-9340-b303f0cb54f8
-    m_ActionName: 'UI/Point[/Mouse/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3dd4b6ef-6d97-460f-acfd-5355f1d2ee6a
-    m_ActionName: 'UI/Click[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 634936f1-8078-41b8-af29-c0cbb3524593
-    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 096e794d-5602-4e58-995e-9b48397a5439
-    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ff15c41f-fdb8-45d3-8250-bd32c068efe3
-    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 74377fc5-7f11-4d9c-9b4a-f10db91a10dc
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 90cd9b53-147e-48ad-92a8-2167f73cb3e4
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: CharacterController.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnSecondaryShoot
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ddd1e4e5-7fcc-4d56-bd2d-e7d5ebbfca8a
-    m_ActionName: 'Player/SecondaryFire[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: CharacterController.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnFirstStyle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a5bff5d3-58ae-4d1a-8f5f-38b074902617
-    m_ActionName: 'Player/Style1[/Keyboard/1]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: CharacterController.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnSecondStyle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 63ae2278-eebd-4217-b8e0-570d2c596e29
-    m_ActionName: 'Player/Style2[/Keyboard/2]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8480953535973470231}
-        m_TargetAssemblyTypeName: CharacterController.PlayerMovement, Assembly-CSharp
-        m_MethodName: OnThirdStyle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2dcaebf6-3180-491c-af73-8ebc4bf01fd0
-    m_ActionName: 'Player/Style3[/Keyboard/3]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!50 &2718217333686590187
 Rigidbody2D:
   serializedVersion: 4
@@ -355,88 +139,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &3211954555644312646
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567236174352486868}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 8e54d815b5feb304b83abab8e8a41345, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.255081}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.489838}
-  m_EdgeRadius: 0
---- !u!58 &9103641186513541582
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4567236174352486868}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 8e54d815b5feb304b83abab8e8a41345, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.5}
-  m_Radius: 0.5
 --- !u!70 &8971327000525221782
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -597,7 +299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b08f73edb724f5ba76d936e707a1439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerMovement: {fileID: 0}
 --- !u!1 &8061750786796533178
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,37 +325,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.989, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 195151874926565576}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8469561414751457350
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5153640442272401433}
-  m_Layer: 3
-  m_Name: Ceiling Check
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5153640442272401433
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8469561414751457350}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

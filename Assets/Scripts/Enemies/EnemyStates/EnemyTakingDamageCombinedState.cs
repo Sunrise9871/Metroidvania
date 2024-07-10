@@ -1,4 +1,4 @@
-﻿using Shooting.Bullets;
+﻿using Shooting;
 
 namespace Enemies.EnemyStates
 {
