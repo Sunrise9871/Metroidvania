@@ -7,14 +7,11 @@ namespace Player.Movement
 {
     public class PlayerInput : MonoBehaviour
     {
-        private Vector2 _input;
-        private bool _isJumpPressed;
-
         private bool _isPrimaryFirePressed;
         private bool _isSecondaryFirePressed;
         private bool _isCombinedFirePressed;
         private bool _wasCombinedFirePressed;
-        
+
         public PlayerInputActions PlayerInputActions { get; private set; }
 
         public event Action<TypeOfFire> PlayerShot;
