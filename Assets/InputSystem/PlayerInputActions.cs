@@ -65,6 +65,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfe0690f-677f-4557-90c1-f055e2179150"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""JumpUp"",
                     ""type"": ""Button"",
                     ""id"": ""7f55a406-5f0b-45bb-b4f8-ae298fe28f85"",
@@ -295,6 +304,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""SecondaryFire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36781573-482d-4a68-a43e-ddf100c65f3a"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -963,6 +983,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_PrimaryFire = m_Player.FindAction("PrimaryFire", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("SecondaryFire", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_JumpUp = m_Player.FindAction("JumpUp", throwIfNotFound: true);
         m_Player_JumpOff = m_Player.FindAction("JumpOff", throwIfNotFound: true);
         m_Player_Style1 = m_Player.FindAction("Style1", throwIfNotFound: true);
@@ -1051,6 +1072,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_PrimaryFire;
     private readonly InputAction m_Player_SecondaryFire;
+    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_JumpUp;
     private readonly InputAction m_Player_JumpOff;
     private readonly InputAction m_Player_Style1;
@@ -1064,6 +1086,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @PrimaryFire => m_Wrapper.m_Player_PrimaryFire;
         public InputAction @SecondaryFire => m_Wrapper.m_Player_SecondaryFire;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @JumpUp => m_Wrapper.m_Player_JumpUp;
         public InputAction @JumpOff => m_Wrapper.m_Player_JumpOff;
         public InputAction @Style1 => m_Wrapper.m_Player_Style1;
@@ -1090,6 +1113,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryFire.started += instance.OnSecondaryFire;
             @SecondaryFire.performed += instance.OnSecondaryFire;
             @SecondaryFire.canceled += instance.OnSecondaryFire;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @JumpUp.started += instance.OnJumpUp;
             @JumpUp.performed += instance.OnJumpUp;
             @JumpUp.canceled += instance.OnJumpUp;
@@ -1121,6 +1147,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryFire.started -= instance.OnSecondaryFire;
             @SecondaryFire.performed -= instance.OnSecondaryFire;
             @SecondaryFire.canceled -= instance.OnSecondaryFire;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @JumpUp.started -= instance.OnJumpUp;
             @JumpUp.performed -= instance.OnJumpUp;
             @JumpUp.canceled -= instance.OnJumpUp;
@@ -1322,6 +1351,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnPrimaryFire(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnJumpUp(InputAction.CallbackContext context);
         void OnJumpOff(InputAction.CallbackContext context);
         void OnStyle1(InputAction.CallbackContext context);

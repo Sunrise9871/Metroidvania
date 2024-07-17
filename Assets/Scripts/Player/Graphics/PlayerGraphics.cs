@@ -8,6 +8,7 @@ namespace Player.Graphics
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(CharacterController2D))]
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerGraphics : MonoBehaviour
     {
         #region AnimationHash
@@ -16,24 +17,24 @@ namespace Player.Graphics
         private readonly int _idleTrigger = Animator.StringToHash("Idle");
         private readonly int _jumpTrigger = Animator.StringToHash("Jump");
         private readonly int _landTrigger = Animator.StringToHash("Land");
+        private readonly int _isDashing = Animator.StringToHash("IsDashing");
         private readonly int _isFlying = Animator.StringToHash("IsFlying");
         private readonly int _speed = Animator.StringToHash("Speed");
-
+        
         #endregion
 
         private PlayerInput _playerInput;
         private CharacterController2D _characterController2D;
+        private SpriteRenderer _spriteRenderer;
 
         private Animator _animator;
-
-        private bool _facingRight = true;
-
 
         private void Awake()
         {
             _characterController2D = GetComponent<CharacterController2D>();
             _animator = GetComponent<Animator>();
             _playerInput = GetComponent<PlayerInput>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void OnEnable()
@@ -44,6 +45,7 @@ namespace Player.Graphics
             _characterController2D.FlewUp += OnFlewUp;
             _characterController2D.Landed += OnLanded;
             _characterController2D.Jumped += OnJumped;
+            _characterController2D.DashStateChanged += OnDashStateChanged;
         }
 
         private void OnDisable()
@@ -54,6 +56,7 @@ namespace Player.Graphics
             _characterController2D.FlewUp -= OnFlewUp;
             _characterController2D.Landed -= OnLanded;
             _characterController2D.Jumped -= OnJumped;
+            _characterController2D.DashStateChanged -= OnDashStateChanged;
         }
 
         private void OnIdled()
@@ -64,15 +67,14 @@ namespace Player.Graphics
         private void OnJumped()
         {
             _animator.SetTrigger(_jumpTrigger);
-            _animator.ResetTrigger(_idleTrigger);
-            _animator.ResetTrigger(_moveTrigger);
         }
 
         private void OnLanded()
         {
-            print("landTrigger");
             _animator.SetBool(_isFlying, false);
             _animator.SetTrigger(_landTrigger);
+            _animator.ResetTrigger(_idleTrigger);
+            _animator.ResetTrigger(_moveTrigger);
         }
 
         private void OnMoved()
@@ -85,34 +87,32 @@ namespace Player.Graphics
             _animator.SetBool(_isFlying, true);
         }
 
+        private void OnDashStateChanged(bool state)
+        {
+            _animator.SetBool(_isDashing, state);
+            FlipSprite(_animator.GetFloat(_speed));
+        }
+
         private void OnDirectMove(InputAction.CallbackContext context)
         {
             var input = context.ReadValue<Vector2>().x;
             _animator.SetFloat(_speed, input);
 
-            if (input > 0f && !_facingRight || input < 0f && _facingRight)
-                Flip();
+            if (_animator.GetBool(_isDashing)) return;
+            
+            FlipSprite(input);
 
             if (!_characterController2D.IsGrounded) return;
             if (input == 0f)
-            {
                 OnIdled();
-                print("idle");
-            }
             else
-            {
                 OnMoved();
-                print("move");
-            }
         }
 
-        private void Flip()
+        private void FlipSprite(float input)
         {
-            _facingRight = !_facingRight;
-
-            var scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
+            if ((input > 0f || !_spriteRenderer.flipX) && (input < 0f || _spriteRenderer.flipX)) 
+                _spriteRenderer.flipX = !_spriteRenderer.flipX;
         }
     }
 }

@@ -82,9 +82,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1e6d5ec9ddfa74b9d386b31b57bb61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSmoothing: 0.05
   horizontalSpeed: 400
   jumpForce: 1500
+  dashForce: 25
+  dashTime: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
