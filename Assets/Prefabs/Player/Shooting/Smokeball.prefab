@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6992583851207957486}
   - component: {fileID: 1739465448485703493}
   - component: {fileID: -9001197823026601900}
+  - component: {fileID: 8127367256496554648}
   - component: {fileID: -5644593305760601470}
   - component: {fileID: -3597279604598014525}
   - component: {fileID: 6328800320883035944}
@@ -108,6 +109,18 @@ MonoBehaviour:
   moveSpeed: 10
   timeToDestroy: 5
   typeOfFire: 2
+--- !u!114 &8127367256496554648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6004791117637299997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c01195dc1f4e7d91df04121a6a1af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &-5644593305760601470
 BoxCollider2D:
   m_ObjectHideFlags: 0

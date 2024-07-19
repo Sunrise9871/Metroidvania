@@ -7,70 +7,61 @@ namespace GameLogic.Level
 {
     public class LevelGenerator : MonoBehaviour
     {
+        private const float CheckLevelRepeatTime = 0.5f;
+        private const float MinDistanceToSpawnPlatform = 80f;
+        private const float RedZoneDifference = 20f;
+        
         [Tooltip("Список платформ для генерации уровня")]
         [SerializeField] private List<GameObject> platforms;
 
+        [Tooltip("Трансформ игрока")]
         [SerializeField] private Transform player;
+        
+        [Tooltip("Уничтожающая платформа")]
         [SerializeField] private Transform redZone;
+        
+        [Tooltip("Платформа, от которой генерируется следующая платформа")]
         [SerializeField] private Transform lastPlatform;
-        [SerializeField] private float checkLevelRepeatTime;
-
-        [Tooltip("Насколько ниже должна быть платформа по сравнению с red zone")]
-        [SerializeField] private float redZoneDifference;
-
+        
+        [Tooltip("Параметры рандома генерации")]
         [SerializeField] private int minX, maxX, minY, maxY;
 
         private Queue<Transform> _activePlatformsQueue;
-        private const float MinDistanceToSpawnPlatform = 80f;
 
-        public static Action<Transform> OnPlatformSpawned;
+        public event Action<Transform> PlatformSpawned;
 
         private void Awake()
         {
             _activePlatformsQueue = new Queue<Transform>();
-            InvokeRepeating(nameof(ManageLevel), 0f, checkLevelRepeatTime);
+            InvokeRepeating(nameof(ManageLevel), 0f, CheckLevelRepeatTime);
         }
-
-        /// <summary>
-        ///   <para>Когда генерировать или удалять платформы</para>
-        /// </summary>
+        
         private void ManageLevel()
         {
-            //Если red zone выше платформы, то удалить платформу
             while (_activePlatformsQueue.TryPeek(out var lowestPlatform))
-                if (lowestPlatform.position.y < redZone.transform.position.y - redZoneDifference)
+                if (lowestPlatform.position.y < redZone.transform.position.y - RedZoneDifference)
                     DestroyLowestPlatform();
                 else break;
 
-            //Если игрок приближается к самой высокой платформе, то создать еще платформу
             if (!lastPlatform) return;
             while (lastPlatform.position.y < player.position.y + MinDistanceToSpawnPlatform)
                 SpawnPlatform();
         }
-
-        /// <summary>
-        ///   <para>Удаление самой низкой платформы</para>
-        /// </summary>
-        private void DestroyLowestPlatform() => Destroy(_activePlatformsQueue.Dequeue().gameObject);
-
-        /// <summary>
-        ///   <para>Создание платформы на новой позиции</para>
-        /// </summary>
+        
+        private void DestroyLowestPlatform() => Destroy(_activePlatformsQueue.Dequeue());
+        
         private void SpawnPlatform()
         {
-            //Вычисление новой позиции для платформы
             var newPosition = new Vector3(
                 Random.Range(minX, maxX),
                 lastPlatform.position.y + Random.Range(minY, maxY),
                 lastPlatform.position.z);
-
-            //Выбор и создание случайного префаба платформы
             var randomPlatformPrefab = platforms[Random.Range(0, platforms.Count)];
-            lastPlatform = Instantiate(randomPlatformPrefab, newPosition, Quaternion.identity, gameObject.transform)
-                .transform;
+            
+            lastPlatform = Instantiate(randomPlatformPrefab, newPosition, Quaternion.identity, transform).transform;
             _activePlatformsQueue.Enqueue(lastPlatform);
 
-            OnPlatformSpawned?.Invoke(lastPlatform);
+            PlatformSpawned?.Invoke(lastPlatform);
         }
     }
 }

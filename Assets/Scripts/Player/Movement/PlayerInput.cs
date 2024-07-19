@@ -14,7 +14,7 @@ namespace Player.Movement
 
         public PlayerInputActions PlayerInputActions { get; private set; }
 
-        public event Action<TypeOfFire> PlayerShot;
+        public event Action<TypeOfFire> Shot;
 
         private void Awake() => PlayerInputActions = new PlayerInputActions();
 
@@ -38,7 +38,7 @@ namespace Player.Movement
 
             if (context.started && _isCombinedFirePressed)
             {
-                PlayerShot?.Invoke(TypeOfFire.CombinedFire);
+                Shot?.Invoke(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
             }
             else if (context.canceled && !_isSecondaryFirePressed)
@@ -46,7 +46,7 @@ namespace Player.Movement
                 if (_wasCombinedFirePressed)
                     _wasCombinedFirePressed = false;
                 else
-                    PlayerShot?.Invoke(TypeOfFire.PrimaryFire);
+                    Shot?.Invoke(TypeOfFire.PrimaryFire);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Player.Movement
 
             if (context.started && _isCombinedFirePressed)
             {
-                PlayerShot?.Invoke(TypeOfFire.CombinedFire);
+                Shot?.Invoke(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
             }
             else if (context.canceled && !_isPrimaryFirePressed)
@@ -65,7 +65,7 @@ namespace Player.Movement
                 if (_wasCombinedFirePressed)
                     _wasCombinedFirePressed = false;
                 else
-                    PlayerShot?.Invoke(TypeOfFire.SecondaryFire);
+                    Shot?.Invoke(TypeOfFire.SecondaryFire);
             }
         }
     }

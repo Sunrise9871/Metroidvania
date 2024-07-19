@@ -10,6 +10,9 @@ namespace Enemies.Logic
     {
         private const float MaximumAcceleration = 2f;
         private const float MinimumAcceleration = 0.5f;
+
+        [Tooltip("Генератор уровня")]
+        [SerializeField] private LevelGenerator levelGenerator;
         
         [Tooltip("Первое место назначения")]
         [SerializeField] private Transform firstDestination;
@@ -32,29 +35,20 @@ namespace Enemies.Logic
         [Tooltip("Нормальная скорость при расстоянии от игрока в...")]
         [SerializeField] private float normalDistance = 15f;
 
-        private Queue<Transform> _paths; // Очередь путей для врага
-
-        /// <summary>
-        ///   <para>Враг получил новое место назначение.</para>
-        /// </summary>
+        private Queue<Transform> _paths;
+        
         public event Action<Transform> NewDestinationSet;
 
         private void Awake() => _paths = new Queue<Transform>();
 
-        private void OnEnable() => LevelGenerator.OnPlatformSpawned += AddNewSpawnedPlatform;
+        private void OnEnable() => levelGenerator.PlatformSpawned += AddNewSpawnedPlatform;
 
-        private void OnDisable() => LevelGenerator.OnPlatformSpawned -= AddNewSpawnedPlatform;
+        private void OnDisable() => levelGenerator.PlatformSpawned -= AddNewSpawnedPlatform;
 
         private void Start() => StartCoroutine(Jump(firstDestination));
-
-        /// <summary>
-        ///   <para>Добавляет новую созданную на уровне платформу в очередь.</para>
-        /// </summary>
+        
         private void AddNewSpawnedPlatform(Transform spawnedPlatform) => _paths.Enqueue(spawnedPlatform);
-
-        /// <summary>
-        ///   <para>Выбирает из очереди и устанавливает новое место назначение для врага.</para>
-        /// </summary>
+        
         private void SetNewDestinationFromQueue()
         {
             while (_paths.TryDequeue(out var destination))
@@ -65,10 +59,7 @@ namespace Enemies.Logic
                 return;
             }
         }
-
-        /// <summary>
-        ///   <para>Возвращает модификатор скорости для врага на основе расстояния до игрока.</para>
-        /// </summary>
+        
         private float CalculateAcceleration()
         {
             var acceleration = normalDistance / (transform.position.y - player.position.y);
@@ -76,11 +67,7 @@ namespace Enemies.Logic
                 ? MaximumAcceleration
                 : Mathf.Clamp(acceleration, MinimumAcceleration, MaximumAcceleration);
         }
-
-        /// <summary>
-        ///   <para>Метод передвижения врага по координатам с помощью синусоиды и интерполяции.</para>
-        /// </summary>
-        /// <param name="destination">Пункт назначения</param>
+        
         private IEnumerator Jump(Transform destination)
         {
             var startPosition = transform.position;
@@ -88,17 +75,13 @@ namespace Enemies.Logic
 
             for (float jumpTime = 0; jumpTime < adjustedJumpDuration; jumpTime += Time.deltaTime)
             {
-                // Прогресс прыжка от 0 до 1 (как проценты)
                 var jumpProgress = jumpTime / adjustedJumpDuration;
-                // Высчитывание эффекта параболического прыжка
                 var height = Mathf.Sin(Mathf.PI * jumpProgress) * jumpHeight;
-                // Перемещение от точки А до Б + эффект параболического прыжка
                 transform.position = Vector3.Lerp(startPosition, destination.position, jumpProgress)
                                      + new Vector3(0, height, 0);
                 yield return null;
             }
 
-            // Установка следующего места для прыжка
             SetNewDestinationFromQueue();
         }
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2152041994026172489}
   - component: {fileID: 2496648438723864971}
   - component: {fileID: 8884446632042436461}
+  - component: {fileID: -704252192120746935}
   - component: {fileID: 5351844184142597502}
   - component: {fileID: 1749253987979005627}
   - component: {fileID: 5246050661555161822}
@@ -109,6 +110,18 @@ MonoBehaviour:
   moveSpeed: 10
   timeToDestroy: 5
   typeOfFire: 0
+--- !u!114 &-704252192120746935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9058211033506258246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c01195dc1f4e7d91df04121a6a1af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &5351844184142597502
 Animator:
   serializedVersion: 7

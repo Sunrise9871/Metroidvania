@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Enemies.Graphics
 {
+    [RequireComponent(typeof(EnemyMovement))]
     public class EnemyGraphics : MonoBehaviour
     {
         private EnemyMovement _enemyMovement;

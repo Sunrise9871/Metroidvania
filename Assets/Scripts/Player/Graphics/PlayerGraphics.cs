@@ -59,32 +59,20 @@ namespace Player.Graphics
             _characterController2D.DashStateChanged -= OnDashStateChanged;
         }
 
-        private void OnIdled()
-        {
-            _animator.SetTrigger(_idleTrigger);
-        }
+        private void OnIdled() => _animator.SetTrigger(_idleTrigger);
 
-        private void OnJumped()
-        {
-            _animator.SetTrigger(_jumpTrigger);
-        }
+        private void OnJumped() => _animator.SetTrigger(_jumpTrigger);
 
+        private void OnMoved() => _animator.SetTrigger(_moveTrigger);
+
+        private void OnFlewUp() => _animator.SetBool(_isFlying, true);
+        
         private void OnLanded()
         {
             _animator.SetBool(_isFlying, false);
             _animator.SetTrigger(_landTrigger);
             _animator.ResetTrigger(_idleTrigger);
             _animator.ResetTrigger(_moveTrigger);
-        }
-
-        private void OnMoved()
-        {
-            _animator.SetTrigger(_moveTrigger);
-        }
-
-        private void OnFlewUp()
-        {
-            _animator.SetBool(_isFlying, true);
         }
 
         private void OnDashStateChanged(bool state)

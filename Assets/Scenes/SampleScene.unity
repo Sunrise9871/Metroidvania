@@ -466,8 +466,6 @@ MonoBehaviour:
   player: {fileID: 366887983}
   redZone: {fileID: 474172179}
   lastPlatform: {fileID: 17173376}
-  checkLevelRepeatTime: 0.5
-  redZoneDifference: 0
   minX: -20
   maxX: 20
   minY: 3
@@ -2654,6 +2652,10 @@ PrefabInstance:
       propertyPath: jumpDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
+      propertyPath: levelGenerator
+      value: 
+      objectReference: {fileID: 404085476}
     - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: normalDistance
       value: 10
