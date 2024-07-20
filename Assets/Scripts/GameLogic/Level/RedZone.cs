@@ -9,7 +9,6 @@ namespace GameLogic.Level
 
         private void Update() => gameObject.transform.Translate(Vector3.up * (speed * Time.deltaTime));
 
-        //Layer: Player
         private void OnTriggerEnter2D(Collider2D other)
         {
             print("Проигрыш!");

@@ -9,6 +9,7 @@ namespace Player.Graphics
     [RequireComponent(typeof(CharacterController2D))]
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(TrailRenderer))]
     public class PlayerGraphics : MonoBehaviour
     {
         #region AnimationHash
@@ -26,6 +27,7 @@ namespace Player.Graphics
         private PlayerInput _playerInput;
         private CharacterController2D _characterController2D;
         private SpriteRenderer _spriteRenderer;
+        private TrailRenderer _trailRenderer;
 
         private Animator _animator;
 
@@ -35,6 +37,7 @@ namespace Player.Graphics
             _animator = GetComponent<Animator>();
             _playerInput = GetComponent<PlayerInput>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _trailRenderer = GetComponent<TrailRenderer>();
         }
 
         private void OnEnable()
@@ -79,6 +82,7 @@ namespace Player.Graphics
         {
             _animator.SetBool(_isDashing, state);
             FlipSprite(_animator.GetFloat(_speed));
+            _trailRenderer.emitting = state;
         }
 
         private void OnDirectMove(InputAction.CallbackContext context)

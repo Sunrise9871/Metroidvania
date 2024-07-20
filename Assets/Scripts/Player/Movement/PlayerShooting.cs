@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Player.Movement
 {
     [RequireComponent(typeof(PlayerInput))]
-    public class PlayerShootProjectiles : MonoBehaviour
+    public class PlayerShooting : MonoBehaviour
     {
         [SerializeField] private GameObject pfPrimaryBullet;
         [SerializeField] private GameObject pfSecondaryBullet;

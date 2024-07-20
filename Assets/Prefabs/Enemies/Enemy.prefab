@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 6450645641446771554}
   - component: {fileID: 3590619436048488049}
   - component: {fileID: 7404704090366271723}
+  - component: {fileID: 7953781345195755450}
   - component: {fileID: 8367243918269056848}
   - component: {fileID: 5415293377737913826}
   m_Layer: 7
@@ -138,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5936428352355524001
 Transform:
   m_ObjectHideFlags: 0
@@ -236,11 +237,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c539d2569c4945a6b4df6e376c65e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelGenerator: {fileID: 0}
   firstDestination: {fileID: 0}
   feet: {fileID: 8164296221276176122}
+  player: {fileID: 0}
   minHeightForNewDestination: 8
   jumpHeight: 5
-  jumpDuration: 2
+  jumpDuration: 1.5
+  normalDistance: 10
+--- !u!114 &7953781345195755450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749660125968653695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018d26b27950453bbfc695add0f0532b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfBullet: {fileID: 9058211033506258246, guid: d5e7d380b1231914184302ebcbb3f43d, type: 3}
+  player: {fileID: 0}
+  shootingFrequency: 3
 --- !u!114 &8367243918269056848
 MonoBehaviour:
   m_ObjectHideFlags: 0
