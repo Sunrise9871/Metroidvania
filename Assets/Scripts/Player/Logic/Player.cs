@@ -7,20 +7,22 @@ namespace Player.Logic
 {
     public class Player : MonoBehaviour, IDamageable
     {
-        [SerializeField] private float health;
+        public int Health => health;
+        
+        [SerializeField] private int health = 12;
 
-        public event Action PlayerDamaged;
-        public event Action PlayerDied;
+        public event Action<int> Damaged;
+        public event Action Died;
         
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
             if (health - 1 >= 0)
             {
                 health--;
-                PlayerDamaged?.Invoke();
+                Damaged?.Invoke(1);
             }
             else
-                PlayerDied?.Invoke();
+                Died?.Invoke();
         }
     }
 }
