@@ -36,7 +36,7 @@ namespace Player.Movement
             _isPrimaryFirePressed = context.ReadValueAsButton();
             _isCombinedFirePressed = _isPrimaryFirePressed && _isSecondaryFirePressed;
 
-            if (context.started && _isCombinedFirePressed)
+            if (context.started && _isCombinedFirePressed && !_wasCombinedFirePressed)
             {
                 Shot?.Invoke(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
@@ -55,7 +55,7 @@ namespace Player.Movement
             _isSecondaryFirePressed = context.ReadValueAsButton();
             _isCombinedFirePressed = _isPrimaryFirePressed && _isSecondaryFirePressed;
 
-            if (context.started && _isCombinedFirePressed)
+            if (context.started && _isCombinedFirePressed && !_wasCombinedFirePressed)
             {
                 Shot?.Invoke(TypeOfFire.CombinedFire);
                 _wasCombinedFirePressed = true;
