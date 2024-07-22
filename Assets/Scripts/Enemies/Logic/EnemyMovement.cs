@@ -38,6 +38,7 @@ namespace Enemies.Logic
         private Queue<Transform> _paths;
         
         public event Action<Transform> NewDestinationSet;
+        public event Action NextPlatformNotFound;
 
         private void Awake() => _paths = new Queue<Transform>();
 
@@ -51,12 +52,17 @@ namespace Enemies.Logic
         
         private void SetNewDestinationFromQueue()
         {
-            while (_paths.TryDequeue(out var destination))
+            while (true)
             {
-                if (destination.position.y - transform.position.y < minHeightForNewDestination) continue;
-                NewDestinationSet?.Invoke(destination);
-                StartCoroutine(Jump(destination));
-                return;
+                while (_paths.TryDequeue(out var destination))
+                {
+                    if (destination.position.y - transform.position.y < minHeightForNewDestination) continue;
+                    NewDestinationSet?.Invoke(destination);
+                    StartCoroutine(Jump(destination));
+                    return;
+                }
+
+                NextPlatformNotFound?.Invoke();
             }
         }
         

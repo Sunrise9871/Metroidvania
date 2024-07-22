@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Enemies.Logic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,9 @@ namespace GameLogic.Level
 
         [Tooltip("Трансформ игрока")]
         [SerializeField] private Transform player;
+
+        [Tooltip("Враг")]
+        [SerializeField] private EnemyMovement _enemy;
         
         [Tooltip("Уничтожающая платформа")]
         [SerializeField] private Transform redZone;
@@ -35,7 +39,11 @@ namespace GameLogic.Level
             _activePlatformsQueue = new Queue<Transform>();
             InvokeRepeating(nameof(ManageLevel), 0f, CheckLevelRepeatTime);
         }
-        
+
+        private void OnEnable() => _enemy.NextPlatformNotFound += SpawnPlatform;
+
+        private void OnDisable() => _enemy.NextPlatformNotFound -= SpawnPlatform;
+
         private void ManageLevel()
         {
             while (_activePlatformsQueue.TryPeek(out var lowestPlatform))
