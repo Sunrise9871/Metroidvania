@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Enemies.EnemyStates;
 using GameLogic.Interfaces;
 using Shooting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Enemies.Logic
 {
@@ -11,7 +13,9 @@ namespace Enemies.Logic
         [Tooltip("Количество очков здоровья")]
         [SerializeField] private float health;
 
-        private EnemyTakingDamageState _enemyTakingDamageState; // Текущий state врага
+        private EnemyTakingDamageState _enemyTakingDamageState;
+
+        public event Action<EnemyTakingDamageState> StateChanged;
 
         private void Start() => StartCoroutine(RandomState());
 
@@ -37,7 +41,8 @@ namespace Enemies.Logic
                     2 => new EnemyTakingDamageCombinedState(),
                     _ => _enemyTakingDamageState
                 };
-                print(_enemyTakingDamageState);
+                
+                StateChanged?.Invoke(_enemyTakingDamageState);
                 yield return new WaitForSeconds(6);
             }
         }

@@ -12,7 +12,7 @@ namespace Player.Graphics
     [RequireComponent(typeof(TrailRenderer))]
     public class PlayerGraphics : MonoBehaviour
     {
-        #region AnimationHash
+        #region AnimatorHash
 
         private readonly int _moveTrigger = Animator.StringToHash("Move");
         private readonly int _idleTrigger = Animator.StringToHash("Idle");

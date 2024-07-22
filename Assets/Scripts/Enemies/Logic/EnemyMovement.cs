@@ -13,7 +13,7 @@ namespace Enemies.Logic
 
         [Tooltip("Генератор уровня")]
         [SerializeField] private LevelGenerator levelGenerator;
-        
+
         [Tooltip("Первое место назначения")]
         [SerializeField] private Transform firstDestination;
 
@@ -35,9 +35,13 @@ namespace Enemies.Logic
         [Tooltip("Нормальная скорость при расстоянии от игрока в...")]
         [SerializeField] private float normalDistance = 15f;
 
+        [Tooltip("Длительность паузы перед следующим прыжком (секунды)")]
+        [SerializeField] private float pauseDuration = 0.3f;
+
         private Queue<Transform> _paths;
-        
+
         public event Action<Transform> NewDestinationSet;
+        public event Action<float> JumpProgressChanged;
         public event Action NextPlatformNotFound;
 
         private void Awake() => _paths = new Queue<Transform>();
@@ -47,9 +51,9 @@ namespace Enemies.Logic
         private void OnDisable() => levelGenerator.PlatformSpawned -= AddNewSpawnedPlatform;
 
         private void Start() => StartCoroutine(Jump(firstDestination));
-        
+
         private void AddNewSpawnedPlatform(Transform spawnedPlatform) => _paths.Enqueue(spawnedPlatform);
-        
+
         private void SetNewDestinationFromQueue()
         {
             while (true)
@@ -78,15 +82,21 @@ namespace Enemies.Logic
         {
             var startPosition = transform.position;
             var adjustedJumpDuration = jumpDuration / CalculateAcceleration();
-
+            var newDestination = destination.position;
+            newDestination.y += Vector3.Distance(transform.position, feet.position);
+            
             for (float jumpTime = 0; jumpTime < adjustedJumpDuration; jumpTime += Time.deltaTime)
             {
                 var jumpProgress = jumpTime / adjustedJumpDuration;
+                JumpProgressChanged?.Invoke(jumpProgress);
+
                 var height = Mathf.Sin(Mathf.PI * jumpProgress) * jumpHeight;
-                transform.position = Vector3.Lerp(startPosition, destination.position, jumpProgress)
+                transform.position = Vector3.Lerp(startPosition, newDestination, jumpProgress)
                                      + new Vector3(0, height, 0);
                 yield return null;
             }
+
+            yield return new WaitForSeconds(pauseDuration);
 
             SetNewDestinationFromQueue();
         }
