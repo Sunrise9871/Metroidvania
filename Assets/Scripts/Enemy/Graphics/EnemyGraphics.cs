@@ -1,10 +1,10 @@
-using Enemies.EnemyStates;
-using Enemies.Logic;
+using Enemy.EnemyTakingDamageStates;
+using Enemy.Logic;
 using UnityEngine;
 
-namespace Enemies.Graphics
+namespace Enemy.Graphics
 {
-    [RequireComponent(typeof(Enemy))]
+    [RequireComponent(typeof(Logic.Enemy))]
     [RequireComponent(typeof(EnemyMovement))]
     [RequireComponent(typeof(Animator))]
     public class EnemyGraphics : MonoBehaviour
@@ -15,7 +15,7 @@ namespace Enemies.Graphics
         
         #endregion
         
-        private Enemy _enemy;
+        private Logic.Enemy _enemy;
         private EnemyMovement _enemyMovement;
 
         private SpriteRenderer _spriteRenderer;
@@ -23,7 +23,7 @@ namespace Enemies.Graphics
 
         private void Awake()
         {
-            _enemy = GetComponent<Enemy>();
+            _enemy = GetComponent<Logic.Enemy>();
             _enemyMovement = GetComponent<EnemyMovement>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();

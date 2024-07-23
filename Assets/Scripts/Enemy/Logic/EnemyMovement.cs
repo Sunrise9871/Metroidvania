@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using GameLogic.Level;
 using UnityEngine;
 
-namespace Enemies.Logic
+namespace Enemy.Logic
 {
     public class EnemyMovement : MonoBehaviour
     {

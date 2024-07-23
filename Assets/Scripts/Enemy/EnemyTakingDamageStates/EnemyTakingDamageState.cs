@@ -1,6 +1,6 @@
 ﻿using Shooting;
 
-namespace Enemies.EnemyStates
+namespace Enemy.EnemyTakingDamageStates
 {
     public abstract class EnemyTakingDamageState
     {

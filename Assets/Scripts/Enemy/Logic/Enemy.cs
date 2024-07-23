@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
-using Enemies.EnemyStates;
+using Enemy.EnemyTakingDamageStates;
 using GameLogic.Interfaces;
 using Shooting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Enemies.Logic
+namespace Enemy.Logic
 {
     public class Enemy : MonoBehaviour, IDamageable
     {

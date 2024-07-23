@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Enemies.Logic;
+using Enemy.Logic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
