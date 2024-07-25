@@ -11,22 +11,42 @@ namespace Enemy.Logic
     public class Enemy : MonoBehaviour, IDamageable
     {
         [Tooltip("Количество очков здоровья")]
-        [SerializeField] private float health;
-
+        [SerializeField] private float maxHealth;
+        
+        private float _health;
         private EnemyTakingDamageState _enemyTakingDamageState;
 
+        public float HealthPercent => _health / maxHealth;
+
+        public event Action Damaged, Died, Healed;
+ 
         public event Action<EnemyTakingDamageState> StateChanged;
 
-        private void Start() => StartCoroutine(RandomState());
+        private void Start()
+        {
+            _health = maxHealth;
+            StartCoroutine(RandomState());
+        }
 
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
             if (!_enemyTakingDamageState.IsVulnerable(typeOfFire))
-                health++;
-            else if (health > 1)
-                health--;
+            {
+                if (_health < maxHealth)
+                    _health++;
+                Healed?.Invoke();
+            }
+            else if (_health > 1)
+            {
+                _health--;
+                Damaged?.Invoke();
+            }
             else
-                Destroy(gameObject);
+            {
+                Died?.Invoke();
+                //Destroy(gameObject);
+            }
+                
         }
 
         private IEnumerator RandomState()

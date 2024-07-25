@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UI.Health
+namespace UI.PlayerHealth
 {
     public class HeartsHealthSystem
     {

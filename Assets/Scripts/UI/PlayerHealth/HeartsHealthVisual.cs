@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Health
+namespace UI.PlayerHealth
 {
     public class HeartsHealthVisual : MonoBehaviour
     {
