@@ -5,8 +5,11 @@ using UnityEngine.InputSystem;
 
 namespace Player.Movement
 {
+    [RequireComponent(typeof(Logic.Player))]
     public class PlayerInput : MonoBehaviour
     {
+        private Logic.Player _player;
+        
         private bool _isPrimaryFirePressed;
         private bool _isSecondaryFirePressed;
         private bool _isCombinedFirePressed;
@@ -16,7 +19,11 @@ namespace Player.Movement
 
         public event Action<TypeOfFire> Shot;
 
-        private void Awake() => PlayerInputActions = new PlayerInputActions();
+        private void Awake()
+        {
+            PlayerInputActions = new PlayerInputActions();
+            _player = GetComponent<Logic.Player>();
+        } 
 
         private void OnEnable()
         {
@@ -27,6 +34,8 @@ namespace Player.Movement
 
             PlayerInputActions.Player.SecondaryFire.started += OnSecondaryShoot;
             PlayerInputActions.Player.SecondaryFire.canceled += OnSecondaryShoot;
+
+            _player.Died += () => PlayerInputActions.Disable();
         }
 
         private void OnDisable() => PlayerInputActions.Disable();

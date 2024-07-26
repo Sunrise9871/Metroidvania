@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Enemy.Logic
 {
+    [RequireComponent(typeof(Enemy))]
     public class EnemyMovement : MonoBehaviour
     {
         private const float MaximumAcceleration = 2f;
@@ -38,17 +39,31 @@ namespace Enemy.Logic
         [Tooltip("Длительность паузы перед следующим прыжком (секунды)")]
         [SerializeField] private float pauseDuration = 0.3f;
 
+        private Enemy _enemy;
+        
         private Queue<Transform> _paths;
 
         public event Action<Transform> NewDestinationSet;
         public event Action<float> JumpProgressChanged;
         public event Action NextPlatformNotFound;
 
-        private void Awake() => _paths = new Queue<Transform>();
+        private void Awake()
+        {
+            _paths = new Queue<Transform>();
+            _enemy = GetComponent<Enemy>();
+        } 
 
-        private void OnEnable() => levelGenerator.PlatformSpawned += AddNewSpawnedPlatform;
+        private void OnEnable()
+        {
+            _enemy.Died += OnDied;
+            levelGenerator.PlatformSpawned += AddNewSpawnedPlatform;
+        }
 
-        private void OnDisable() => levelGenerator.PlatformSpawned -= AddNewSpawnedPlatform;
+        private void OnDisable()
+        {
+            _enemy.Died -= OnDied;
+            levelGenerator.PlatformSpawned -= AddNewSpawnedPlatform;
+        }
 
         private void Start() => StartCoroutine(Jump(firstDestination));
 
@@ -56,7 +71,7 @@ namespace Enemy.Logic
 
         private void SetNewDestinationFromQueue()
         {
-            while (true)
+            while (enabled)
             {
                 while (_paths.TryDequeue(out var destination))
                 {
@@ -100,5 +115,7 @@ namespace Enemy.Logic
 
             SetNewDestinationFromQueue();
         }
+
+        private void OnDied() => enabled = false;
     }
 }

@@ -16,7 +16,7 @@ namespace Player.Logic
         
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
-            if (health - 1 >= 0)
+            if (health - 1 > 0)
             {
                 health--;
                 Damaged?.Invoke(1);

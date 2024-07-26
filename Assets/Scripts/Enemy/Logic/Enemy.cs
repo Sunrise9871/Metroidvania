@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemy.Logic
 {
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class Enemy : MonoBehaviour, IDamageable
     {
         [Tooltip("Количество очков здоровья")]
@@ -16,11 +17,14 @@ namespace Enemy.Logic
         private float _health;
         private EnemyTakingDamageState _enemyTakingDamageState;
 
+        private CapsuleCollider2D _collider;
+
         public float HealthPercent => _health / maxHealth;
 
         public event Action Damaged, Died, Healed;
- 
         public event Action<EnemyTakingDamageState> StateChanged;
+
+        private void Awake() => _collider = GetComponent<CapsuleCollider2D>();
 
         private void Start()
         {
@@ -31,27 +35,36 @@ namespace Enemy.Logic
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
             if (!_enemyTakingDamageState.IsVulnerable(typeOfFire))
-            {
-                if (_health < maxHealth)
-                    _health++;
-                Healed?.Invoke();
-            }
+                Heal();
             else if (_health > 1)
-            {
-                _health--;
-                Damaged?.Invoke();
-            }
+                Damage();
             else
-            {
-                Died?.Invoke();
-                //Destroy(gameObject);
-            }
-                
+                Die();
+        }
+
+        private void Die()
+        {
+            Died?.Invoke();
+            _collider.enabled = false;
+            enabled = false;
+        }
+
+        private void Damage()
+        {
+            _health--;
+            Damaged?.Invoke();
+        }
+
+        private void Heal()
+        {
+            if (_health < maxHealth)
+                _health++;
+            Healed?.Invoke();
         }
 
         private IEnumerator RandomState()
         {
-            while (true)
+            while (enabled)
             {
                 var state = Random.Range(0, 3);
                 _enemyTakingDamageState = state switch

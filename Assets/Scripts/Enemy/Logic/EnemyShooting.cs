@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Enemy.Logic
 {
+    [RequireComponent(typeof(Enemy))]
     public class EnemyShooting : MonoBehaviour
     {
         [Tooltip("Префаб для projectile")]
@@ -18,6 +19,13 @@ namespace Enemy.Logic
 
         private BulletSpawner _bulletPool;
         private ShotStyle _shotStyle;
+        private Enemy _enemy;
+
+        private void Awake() => _enemy = GetComponent<Enemy>();
+
+        private void OnEnable() => _enemy.Died += OnDied;
+
+        private void OnDisable() => _enemy.Died -= OnDied;
 
         private void Start()
         {
@@ -30,7 +38,7 @@ namespace Enemy.Logic
         {
             var awaitTime = new WaitForSeconds(shootingFrequency);
             
-            while (true)
+            while (enabled)
             {
                 var direction = (player.position - transform.position).normalized;
 
@@ -46,6 +54,7 @@ namespace Enemy.Logic
                 yield return awaitTime;
             }
         }
-        
+
+        private void OnDied() => enabled = false;
     }
 }
