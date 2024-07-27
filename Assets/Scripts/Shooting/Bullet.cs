@@ -51,6 +51,8 @@ namespace Shooting
         private void OnTriggerEnter2D(Collider2D other)
         {
             var target = other.GetComponent<IDamageable>();
+            if (target is null) return;
+            
             target.ReceiveDamage(typeOfFire);
 
             CancelInvoke(nameof(ExplodeBullet));
