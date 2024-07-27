@@ -1,4 +1,5 @@
 using System;
+using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,7 +9,7 @@ namespace Player.Movement
     [RequireComponent(typeof(Logic.Player))]
     public class PlayerInput : MonoBehaviour
     {
-        private Logic.Player _player;
+        private GameStopScenario _stopScenario;
         
         private bool _isPrimaryFirePressed;
         private bool _isSecondaryFirePressed;
@@ -22,8 +23,8 @@ namespace Player.Movement
         private void Awake()
         {
             PlayerInputActions = new PlayerInputActions();
-            _player = GetComponent<Logic.Player>();
-        } 
+            _stopScenario = FindAnyObjectByType<GameStopScenario>();
+        }
 
         private void OnEnable()
         {
@@ -35,7 +36,7 @@ namespace Player.Movement
             PlayerInputActions.Player.SecondaryFire.started += OnSecondaryShoot;
             PlayerInputActions.Player.SecondaryFire.canceled += OnSecondaryShoot;
 
-            _player.Died += () => PlayerInputActions.Disable();
+            _stopScenario.GameStopped += () => PlayerInputActions.Disable();
         }
 
         private void OnDisable() => PlayerInputActions.Disable();

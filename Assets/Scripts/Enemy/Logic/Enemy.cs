@@ -2,6 +2,7 @@
 using System.Collections;
 using Enemy.EnemyTakingDamageStates;
 using GameLogic.Interfaces;
+using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,23 +15,29 @@ namespace Enemy.Logic
         [Tooltip("Количество очков здоровья")]
         [SerializeField] private float maxHealth;
         
-        private float _health;
-        private EnemyTakingDamageState _enemyTakingDamageState;
-
         private CapsuleCollider2D _collider;
-
+        
+        private EnemyTakingDamageState _enemyTakingDamageState;
+        private GameStopScenario _stopScenario;
+        private float _health;
+        
         public float HealthPercent => _health / maxHealth;
 
         public event Action Damaged, Died, Healed;
         public event Action<EnemyTakingDamageState> StateChanged;
 
-        private void Awake() => _collider = GetComponent<CapsuleCollider2D>();
-
-        private void Start()
+        private void Awake()
         {
+            _collider = GetComponent<CapsuleCollider2D>();
+            _stopScenario = FindAnyObjectByType<GameStopScenario>();
             _health = maxHealth;
-            StartCoroutine(RandomState());
         }
+        
+        private void Start() => StartCoroutine(RandomState());
+
+        private void OnEnable() => _stopScenario.GameStopped += OnGameStopped;
+
+        private void OnDisable() => _stopScenario.GameStopped -= OnGameStopped;
 
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
@@ -79,5 +86,7 @@ namespace Enemy.Logic
                 yield return new WaitForSeconds(6);
             }
         }
+
+        private void OnGameStopped() => enabled = false;
     }
 }

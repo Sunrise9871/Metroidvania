@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ namespace Player.Movement
         private BulletSpawner _primaryPool;
         private BulletSpawner _secondaryPool;
         private BulletSpawner _combinedPool;
-
+        
+        private GameStopScenario _stopScenario;
+        
         private Dictionary<TypeOfFire, BulletSpawner> _pools;
 
         private UnityEngine.Camera _camera;
@@ -22,6 +25,7 @@ namespace Player.Movement
 
         private void Awake()
         {
+            _stopScenario = FindAnyObjectByType<GameStopScenario>();
             _playerInput = GetComponent<PlayerInput>();
             _camera = UnityEngine.Camera.main;
             
@@ -37,9 +41,19 @@ namespace Player.Movement
             };
         }
 
-        private void OnEnable() => _playerInput.Shot += OnShot;
+        private void OnEnable()
+        {
+            _playerInput.Shot += OnShot;
 
-        private void OnDisable() => _playerInput.Shot -= OnShot;
+            _stopScenario.GameStopped += OnGameStopped;
+        }
+
+        private void OnDisable()
+        {
+            _playerInput.Shot -= OnShot;
+
+            _stopScenario.GameStopped -= OnGameStopped;
+        } 
 
         private void OnShot(TypeOfFire typeOfFire)
         {
@@ -55,5 +69,7 @@ namespace Player.Movement
             bulletScript.Setup(transform.position, rotation, direction.normalized,
                 () => pool.Release(bulletScript));
         }
+
+        private void OnGameStopped() => enabled = false;
     }
 }

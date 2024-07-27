@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using Enemy.ShotStyles;
+using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Enemy.Logic
 {
@@ -16,16 +18,29 @@ namespace Enemy.Logic
 
         [Tooltip("Частота стрельбы в секундах")]
         [SerializeField] private float shootingFrequency;
-
+        
         private BulletSpawner _bulletPool;
         private ShotStyle _shotStyle;
         private Enemy _enemy;
+        private GameStopScenario _stopScenario;
 
-        private void Awake() => _enemy = GetComponent<Enemy>();
+        private void Awake()
+        {
+            _enemy = GetComponent<Enemy>();
+            _stopScenario = FindAnyObjectByType<GameStopScenario>();
+        }
+        
+        private void OnEnable()
+        {
+            _enemy.Died += OnGameStopped;
+            _stopScenario.GameStopped += OnGameStopped;
+        } 
 
-        private void OnEnable() => _enemy.Died += OnDied;
-
-        private void OnDisable() => _enemy.Died -= OnDied;
+        private void OnDisable()
+        {
+            _enemy.Died -= OnGameStopped;
+            _stopScenario.GameStopped -= OnGameStopped;
+        }
 
         private void Start()
         {
@@ -55,6 +70,6 @@ namespace Enemy.Logic
             }
         }
 
-        private void OnDied() => enabled = false;
+        private void OnGameStopped() => enabled = false;
     }
 }
