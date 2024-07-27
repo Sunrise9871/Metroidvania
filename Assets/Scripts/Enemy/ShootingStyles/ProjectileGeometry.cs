@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 
-namespace Enemy.ShotStyles
+namespace Enemy.ShootingStyles
 {
     public class ProjectileGeometry
     {

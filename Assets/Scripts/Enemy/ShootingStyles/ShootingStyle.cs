@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Enemy.ShotStyles
+namespace Enemy.ShootingStyles
 {
-    public abstract class ShotStyle
+    public abstract class ShootingStyle
     {
         public abstract ProjectileGeometry GetGeometry(Vector3 direction);
     }

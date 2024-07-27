@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Enemy.ShotStyles
+namespace Enemy.ShootingStyles
 {
-    public class SingleShotStyle : ShotStyle
+    public class SingleShootingStyle : ShootingStyle
     {
         private const int Count = 1;
         private const float Yaw = 0f;

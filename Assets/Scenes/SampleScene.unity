@@ -4630,6 +4630,10 @@ PrefabInstance:
       propertyPath: m_MaskInteraction
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7022054485642171934, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7404704090366271723, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: player
       value: 

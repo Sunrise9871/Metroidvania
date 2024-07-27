@@ -13,7 +13,10 @@ namespace Enemy.Logic
     public class Enemy : MonoBehaviour, IDamageable
     {
         [Tooltip("Количество очков здоровья")]
-        [SerializeField] private float maxHealth;
+        [SerializeField] private float maxHealth = 30f;
+
+        [Tooltip("Частота, с коротой меняется тип уязвимости к урону")]
+        [SerializeField] private float takingDamageStateChangingTime = 6f;
         
         private CapsuleCollider2D _collider;
         
@@ -71,6 +74,8 @@ namespace Enemy.Logic
 
         private IEnumerator RandomState()
         {
+            var awaitTime = new WaitForSeconds(takingDamageStateChangingTime); 
+            
             while (enabled)
             {
                 var state = Random.Range(0, 3);
@@ -83,7 +88,7 @@ namespace Enemy.Logic
                 };
                 
                 StateChanged?.Invoke(_enemyTakingDamageState);
-                yield return new WaitForSeconds(6);
+                yield return awaitTime;
             }
         }
 
