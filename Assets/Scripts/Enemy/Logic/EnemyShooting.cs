@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Enemy.EnemyStages;
-using Enemy.ShootingStyles;
 using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
@@ -11,7 +10,13 @@ namespace Enemy.Logic
     public class EnemyShooting : MonoBehaviour
     {
         private const float NormalHealth = 0.75f;
-        private const float CriticalHealth = 0.4f;
+        private const float LowHealth = 0.55f;
+        private const float CriticalHealth = 0.3f;
+        
+        private readonly EasyEnemyStage _easyEnemyStage = new();
+        private readonly NormalEnemyStage _normalEnemyStage = new();
+        private readonly HardEnemyStage _hardEnemyStage = new();
+        private readonly RageEnemyStage _rageEnemyStage = new();
 
         [Tooltip("Префаб для projectile")]
         [SerializeField] private GameObject pfBullet;
@@ -20,19 +25,16 @@ namespace Enemy.Logic
         [SerializeField] private Transform player;
 
         private BulletSpawner _bulletPool;
-        private EnemyStage _enemyStage = new EasyEnemyStage();
+        private EnemyStage _enemyStage;
         private Enemy _enemy;
         private GameStopScenario _stopScenario;
 
-        private readonly EasyEnemyStage _easyEnemyStage = new();
-        private readonly NormalEnemyStage _normalEnemyStage = new();
-        private readonly HardEnemyStage _hardEnemyStage = new();
-
         private void Awake()
         {
+            _enemyStage = _easyEnemyStage;
+            _bulletPool = new BulletSpawner(pfBullet);
             _enemy = GetComponent<Enemy>();
             _stopScenario = FindAnyObjectByType<GameStopScenario>();
-            _bulletPool = new BulletSpawner(pfBullet);
         }
 
         private void Start() => StartCoroutine(nameof(Shoot));
@@ -75,13 +77,13 @@ namespace Enemy.Logic
             _enemyStage = _enemy.HealthPercent switch
             {
                 > NormalHealth => _easyEnemyStage,
-                > CriticalHealth => _normalEnemyStage,
-                < CriticalHealth => _hardEnemyStage,
+                > LowHealth => _normalEnemyStage,
+                > CriticalHealth => _hardEnemyStage,
+                < CriticalHealth => _rageEnemyStage,
                 _ => _enemyStage
             };
         }
-
-
+        
         private void OnGameStopped() => enabled = false;
     }
 }
