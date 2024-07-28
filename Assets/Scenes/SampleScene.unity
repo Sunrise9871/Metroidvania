@@ -1232,7 +1232,7 @@ MonoBehaviour:
   platforms:
   - {fileID: 2989660065472034532, guid: 93e0c4cac8825db4aab12b866acf197f, type: 3}
   player: {fileID: 366887983}
-  _enemy: {fileID: 1253641766}
+  enemy: {fileID: 1253641766}
   redZone: {fileID: 474172179}
   lastPlatform: {fileID: 440302532}
   minX: -20
@@ -4582,6 +4582,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3590607719740942777, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3590607719740942777, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3590619436048488049, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
+      propertyPath: maxHealth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3590619436048488049, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: stopScenario
       value: 
@@ -4731,6 +4743,10 @@ PrefabInstance:
       propertyPath: stopScenario
       value: 
       objectReference: {fileID: 337275761}
+    - target: {fileID: 8879142444388235842, guid: 11cb87cdb299a0f4184724f08df21965, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4807,7 +4823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5070297532172225418, guid: 78f570ecb9261eb4bbfa0ea3a80a9f2e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6792524617219615367, guid: 78f570ecb9261eb4bbfa0ea3a80a9f2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4852,6 +4868,10 @@ PrefabInstance:
     - target: {fileID: 7732227497353560589, guid: 78f570ecb9261eb4bbfa0ea3a80a9f2e, type: 3}
       propertyPath: speed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628879025410243057, guid: 78f570ecb9261eb4bbfa0ea3a80a9f2e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8628879025410243057, guid: 78f570ecb9261eb4bbfa0ea3a80a9f2e, type: 3}
       propertyPath: m_CallbackLayers.m_Bits

@@ -10,6 +10,7 @@ namespace Player.Graphics
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(TrailRenderer))]
+    [RequireComponent(typeof(Logic.Player))]
     public class PlayerGraphics : MonoBehaviour
     {
         #region AnimatorHash
@@ -18,6 +19,7 @@ namespace Player.Graphics
         private readonly int _idleTrigger = Animator.StringToHash("Idle");
         private readonly int _jumpTrigger = Animator.StringToHash("Jump");
         private readonly int _landTrigger = Animator.StringToHash("Land");
+        private readonly int _deathTrigger = Animator.StringToHash("Death");
         private readonly int _isDashing = Animator.StringToHash("IsDashing");
         private readonly int _isFlying = Animator.StringToHash("IsFlying");
         private readonly int _speed = Animator.StringToHash("Speed");
@@ -26,16 +28,18 @@ namespace Player.Graphics
 
         private PlayerInput _playerInput;
         private CharacterController2D _characterController2D;
+        private Logic.Player _player;
+        
         private SpriteRenderer _spriteRenderer;
         private TrailRenderer _trailRenderer;
-
         private Animator _animator;
 
         private void Awake()
         {
             _characterController2D = GetComponent<CharacterController2D>();
-            _animator = GetComponent<Animator>();
+            _player = GetComponent<Logic.Player>();
             _playerInput = GetComponent<PlayerInput>();
+            _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _trailRenderer = GetComponent<TrailRenderer>();
         }
@@ -49,6 +53,8 @@ namespace Player.Graphics
             _characterController2D.Landed += OnLanded;
             _characterController2D.Jumped += OnJumped;
             _characterController2D.DashStateChanged += OnDashStateChanged;
+
+            _player.Died += OnDied;
         }
 
         private void OnDisable()
@@ -60,6 +66,8 @@ namespace Player.Graphics
             _characterController2D.Landed -= OnLanded;
             _characterController2D.Jumped -= OnJumped;
             _characterController2D.DashStateChanged -= OnDashStateChanged;
+
+            _player.Died -= OnDied;
         }
 
         private void OnIdled() => _animator.SetTrigger(_idleTrigger);
@@ -67,6 +75,8 @@ namespace Player.Graphics
         private void OnJumped() => _animator.SetTrigger(_jumpTrigger);
 
         private void OnMoved() => _animator.SetTrigger(_moveTrigger);
+
+        private void OnDied() => _animator.SetTrigger(_deathTrigger);
 
         private void OnFlewUp() => _animator.SetBool(_isFlying, true);
         
