@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Enemy.Logic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GameLogic.Level
@@ -10,7 +11,7 @@ namespace GameLogic.Level
     {
         private const float CheckLevelRepeatTime = 0.5f;
         private const float MinDistanceToSpawnPlatform = 80f;
-        private const float RedZoneDifference = 20f;
+        private const float RedZoneDifference = 50f;
         
         [Tooltip("Список платформ для генерации уровня")]
         [SerializeField] private List<GameObject> platforms;
@@ -19,7 +20,7 @@ namespace GameLogic.Level
         [SerializeField] private Transform player;
 
         [Tooltip("Враг")]
-        [SerializeField] private EnemyMovement _enemy;
+        [SerializeField] private EnemyMovement enemy;
         
         [Tooltip("Уничтожающая платформа")]
         [SerializeField] private Transform redZone;
@@ -40,9 +41,9 @@ namespace GameLogic.Level
             InvokeRepeating(nameof(ManageLevel), 0f, CheckLevelRepeatTime);
         }
 
-        private void OnEnable() => _enemy.NextPlatformNotFound += SpawnPlatform;
+        private void OnEnable() => enemy.NextPlatformNotFound += SpawnPlatform;
 
-        private void OnDisable() => _enemy.NextPlatformNotFound -= SpawnPlatform;
+        private void OnDisable() => enemy.NextPlatformNotFound -= SpawnPlatform;
 
         private void ManageLevel()
         {
@@ -55,8 +56,12 @@ namespace GameLogic.Level
             while (lastPlatform.position.y < player.position.y + MinDistanceToSpawnPlatform)
                 SpawnPlatform();
         }
-        
-        private void DestroyLowestPlatform() => Destroy(_activePlatformsQueue.Dequeue());
+
+        private void DestroyLowestPlatform()
+        {
+            var platform = _activePlatformsQueue.Dequeue().gameObject;
+            Destroy(platform);
+        } 
         
         private void SpawnPlatform()
         {
