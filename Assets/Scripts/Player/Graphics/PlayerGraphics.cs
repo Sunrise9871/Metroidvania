@@ -1,4 +1,5 @@
-﻿using Player.Movement;
+﻿using System.Collections;
+using Player.Movement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PlayerInput = Player.Movement.PlayerInput;
@@ -13,6 +14,8 @@ namespace Player.Graphics
     [RequireComponent(typeof(Logic.Player))]
     public class PlayerGraphics : MonoBehaviour
     {
+        private const float DissolveTimeScale = 0.5f;
+        
         #region AnimatorHash
 
         private readonly int _moveTrigger = Animator.StringToHash("Move");
@@ -25,7 +28,9 @@ namespace Player.Graphics
         private readonly int _speed = Animator.StringToHash("Speed");
         
         #endregion
-
+        
+        private readonly int _fadeShader = Shader.PropertyToID("_Fade");
+        
         private PlayerInput _playerInput;
         private CharacterController2D _characterController2D;
         private Logic.Player _player;
@@ -74,9 +79,14 @@ namespace Player.Graphics
 
         private void OnJumped() => _animator.SetTrigger(_jumpTrigger);
 
+
         private void OnMoved() => _animator.SetTrigger(_moveTrigger);
 
-        private void OnDied() => _animator.SetTrigger(_deathTrigger);
+        private void OnDied()
+        {
+            _animator.SetTrigger(_deathTrigger);
+            StartCoroutine(DissolveSprite());
+        }
 
         private void OnFlewUp() => _animator.SetBool(_isFlying, true);
         
@@ -115,6 +125,17 @@ namespace Player.Graphics
         {
             if ((input > 0f || !_spriteRenderer.flipX) && (input < 0f || _spriteRenderer.flipX)) 
                 _spriteRenderer.flipX = !_spriteRenderer.flipX;
+        }
+        
+        private IEnumerator DissolveSprite()
+        {
+            var material = _spriteRenderer.material;
+            
+            for (var i = 1f; i > 0f; i -= Time.deltaTime * DissolveTimeScale)
+            {
+                material.SetFloat(_fadeShader, i);
+                yield return null;
+            }
         }
     }
 }

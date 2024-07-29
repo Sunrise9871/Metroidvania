@@ -12,6 +12,8 @@ namespace Enemy.Graphics
     [RequireComponent(typeof(Light2D))]
     public class EnemyGraphics : MonoBehaviour
     {
+        private const float DissolveTimeScale = 0.5f;
+        
         #region AnimatorHash
 
         private readonly int _jumpProgress = Animator.StringToHash("JumpProgress");
@@ -23,6 +25,7 @@ namespace Enemy.Graphics
         private readonly Color _healColor = Color.green;
         private readonly Color _defaultColor = Color.white;
         private readonly WaitForSeconds _healthChangeEffectTime = new (0.3f);
+        private readonly int _fadeShader = Shader.PropertyToID("_Fade");
         
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
@@ -76,7 +79,11 @@ namespace Enemy.Graphics
 
         private void OnHealed() => PlayHealthChangeEffect(_healColor);
 
-        private void OnDied() => _animator.SetTrigger(_deadTrigger);
+        private void OnDied()
+        {
+            _animator.SetTrigger(_deadTrigger);
+            StartCoroutine(DissolveSprite());
+        } 
 
         private void PlayHealthChangeEffect(Color color) 
         {
@@ -91,6 +98,18 @@ namespace Enemy.Graphics
                 _spriteRenderer.color = color;
                 yield return _healthChangeEffectTime;
                 _spriteRenderer.color = _defaultColor;
+            }
+        }
+
+        private IEnumerator DissolveSprite()
+        {
+            var material = _spriteRenderer.material;
+            
+            for (var i = 1f; i > 0f; i -= Time.deltaTime * DissolveTimeScale)
+            {
+                print(i);
+                material.SetFloat(_fadeShader, i);
+                yield return null;
             }
         }
     }
