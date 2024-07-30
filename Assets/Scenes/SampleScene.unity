@@ -2572,7 +2572,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 190946027
   m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 38ce3cd1d39984043ac0164c3cfe4780, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2749,8 +2749,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777669015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4939754, y: -3.992004, z: -0.16973805}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.4939754, y: -3.9920034, z: -0.16973805}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3447,7 +3447,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 190946027
   m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 9c35793c532c4c24dbc62d03b16b1cd4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4239,7 +4239,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 190946027
   m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 5d59f3927d2df654aa8e923c37d2887d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5065,6 +5065,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11cb87cdb299a0f4184724f08df21965, type: 3}
+--- !u!1001 &5476536761495222978
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6004791117637299997, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_Name
+      value: Smokeball
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6992583851207957486, guid: e23e368515ee808458693ee1361a3358, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e23e368515ee808458693ee1361a3358, type: 3}
 --- !u!1001 &7742210230667736017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5134,6 +5191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedZone
       objectReference: {fileID: 0}
+    - target: {fileID: 6778897351537992184, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8732995494446651179, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.8
@@ -5192,6 +5253,7 @@ SceneRoots:
   - {fileID: 337275760}
   - {fileID: 725178544}
   - {fileID: 8738085827882757650}
+  - {fileID: 777669017}
   - {fileID: 1291781888}
   - {fileID: 967405151}
-  - {fileID: 777669017}
+  - {fileID: 5476536761495222978}

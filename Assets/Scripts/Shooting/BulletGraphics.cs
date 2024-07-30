@@ -7,6 +7,7 @@ namespace Shooting
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Bullet))]
+    [RequireComponent(typeof(Light2D))]
     public class BulletGraphics : MonoBehaviour
     {
         private Bullet _bullet;
@@ -30,7 +31,7 @@ namespace Shooting
             _bullet.BulletExploded += OnBulletExploded;
 
             _spriteRenderer.enabled = true;
-            if (_light) _light.enabled = true;
+            _light.enabled = true;
             _animator.enabled = true;
         }
 
@@ -39,7 +40,7 @@ namespace Shooting
         private void OnBulletExploded()
         {
             _spriteRenderer.enabled = false;
-            if (_light) _light.enabled = false;
+            _light.enabled = false;
             _animator.enabled = false;
 
             _particleSystemGameObject.Play();
