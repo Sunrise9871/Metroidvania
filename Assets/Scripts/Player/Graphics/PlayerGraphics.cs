@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using Player.Movement;
+using Player.Control;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using PlayerInput = Player.Movement.PlayerInput;
+using PlayerInput = Player.Control.PlayerInput;
 
 namespace Player.Graphics
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GameLogic.Level
+namespace GameLogic.Level.Background
 {
     public class ParallaxEffect : MonoBehaviour
     {

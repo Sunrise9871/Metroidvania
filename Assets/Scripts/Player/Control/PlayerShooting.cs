@@ -3,7 +3,7 @@ using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
 
-namespace Player.Movement
+namespace Player.Control
 {
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerShooting : MonoBehaviour

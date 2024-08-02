@@ -1,4 +1,4 @@
-﻿using Enemy.ShootingStyles;
+﻿using Shooting.ShootingStyles;
 
 namespace Enemy.EnemyStages
 {

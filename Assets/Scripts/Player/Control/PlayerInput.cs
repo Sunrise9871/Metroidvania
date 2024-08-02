@@ -4,7 +4,7 @@ using Shooting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player.Movement
+namespace Player.Control
 {
     [RequireComponent(typeof(Logic.Player))]
     public class PlayerInput : MonoBehaviour

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLogic.Level
+namespace GameLogic.Level.Background
 {
     public class Background : MonoBehaviour
     {

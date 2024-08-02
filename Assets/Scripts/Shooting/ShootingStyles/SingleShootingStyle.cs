@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemy.ShootingStyles
+namespace Shooting.ShootingStyles
 {
     public class SingleShootingStyle : ShootingStyle
     {
