@@ -16,16 +16,13 @@ namespace UI.FullscreenCanvas
 
         private void QuitGame()
         {
-            QuitPlayMode();
-            QuitGameBuild();
-        }
-        
 #if UNITY_STANDALONE
-        private void QuitGameBuild() => Application.Quit();
+            Application.Quit();
 #endif
 
 #if UNITY_EDITOR
-        private void QuitPlayMode() => UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
+        }
     }
 }
