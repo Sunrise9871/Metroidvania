@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Enemy.Logic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace GameLogic.Level
