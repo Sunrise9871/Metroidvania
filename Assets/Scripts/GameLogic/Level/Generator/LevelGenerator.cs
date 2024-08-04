@@ -4,7 +4,7 @@ using Enemy.Logic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GameLogic.Level
+namespace GameLogic.Level.Generator
 {
     public class LevelGenerator : MonoBehaviour
     {
@@ -12,31 +12,33 @@ namespace GameLogic.Level
         private const float MinDistanceToSpawnPlatform = 80f;
         private const float RedZoneDifference = 50f;
         
-        [Tooltip("Список платформ для генерации уровня")]
-        [SerializeField] private List<GameObject> platforms;
+        private readonly Queue<Transform> _activePlatforms = new();
+        
+        [Tooltip("Платформа для генерации уровня")]
+        [SerializeField] private Transform platform;
 
         [Tooltip("Трансформ игрока")]
         [SerializeField] private Transform player;
 
         [Tooltip("Враг")]
         [SerializeField] private EnemyMovement enemy;
-        
+
         [Tooltip("Уничтожающая платформа")]
         [SerializeField] private Transform redZone;
-        
+
         [Tooltip("Платформа, от которой генерируется следующая платформа")]
         [SerializeField] private Transform lastPlatform;
-        
+
         [Tooltip("Параметры рандома генерации")]
         [SerializeField] private int minX, maxX, minY, maxY;
 
-        private Queue<Transform> _activePlatformsQueue;
+        private PlatformSpawner _platformSpawner;
 
         public event Action<Transform> PlatformSpawned;
 
         private void Awake()
         {
-            _activePlatformsQueue = new Queue<Transform>();
+            _platformSpawner = new PlatformSpawner(platform);
             InvokeRepeating(nameof(ManageLevel), 0f, CheckLevelRepeatTime);
         }
 
@@ -46,7 +48,7 @@ namespace GameLogic.Level
 
         private void ManageLevel()
         {
-            while (_activePlatformsQueue.TryPeek(out var lowestPlatform))
+            while (_activePlatforms.TryPeek(out var lowestPlatform))
                 if (lowestPlatform.position.y < redZone.transform.position.y - RedZoneDifference)
                     DestroyLowestPlatform();
                 else break;
@@ -58,21 +60,22 @@ namespace GameLogic.Level
 
         private void DestroyLowestPlatform()
         {
-            var platform = _activePlatformsQueue.Dequeue().gameObject;
-            Destroy(platform);
-        } 
-        
+            var lowestPlatform = _activePlatforms.Dequeue();
+            _platformSpawner.Release(lowestPlatform);
+        }
+
         private void SpawnPlatform()
         {
             var newPosition = new Vector3(
                 Random.Range(minX, maxX),
                 lastPlatform.position.y + Random.Range(minY, maxY),
                 lastPlatform.position.z);
-            var randomPlatformPrefab = platforms[Random.Range(0, platforms.Count)];
             
-            lastPlatform = Instantiate(randomPlatformPrefab, newPosition, Quaternion.identity, transform).transform;
-            _activePlatformsQueue.Enqueue(lastPlatform);
-
+            lastPlatform = _platformSpawner.Get();
+            lastPlatform.position = newPosition;
+            lastPlatform.parent = transform;
+            
+            _activePlatforms.Enqueue(lastPlatform);
             PlatformSpawned?.Invoke(lastPlatform);
         }
     }

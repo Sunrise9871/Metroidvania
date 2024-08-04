@@ -20,7 +20,7 @@ namespace Shooting
         
         public Bullet Get() => _pool.Get();
         
-        public void Release(Bullet obj) => _pool.Release(obj);
+        public void Release(Bullet script) => _pool.Release(script);
         
         private Bullet OnCreateGameObject() => Object.Instantiate(_prefab).GetComponent<Bullet>();
 

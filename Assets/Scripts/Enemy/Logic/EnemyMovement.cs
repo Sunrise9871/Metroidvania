@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameLogic.Level;
+using GameLogic.Level.Generator;
 using UnityEngine;
 
 namespace Enemy.Logic
