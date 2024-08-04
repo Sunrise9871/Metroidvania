@@ -84,9 +84,9 @@ namespace Player.Control
             if (_isDashing) return;
 
             var targetVelocity = new Vector2(_movementInput * horizontalSpeed * Time.fixedDeltaTime,
-                _rigidbody2D.velocity.y);
+                _rigidbody2D.linearVelocity.y);
 
-            _rigidbody2D.velocity = targetVelocity;
+            _rigidbody2D.linearVelocity = targetVelocity;
         }
 
         private void GroundCheck()
@@ -97,7 +97,7 @@ namespace Player.Control
             var groundHit = Physics2D.Raycast(groundCheck.position, Vector2.down, GroundedDistance,
                 whatIsGround);
 
-            if (!groundHit.collider || Mathf.Abs(_rigidbody2D.velocityY) > ApproximatelyZeroAcceleration)
+            if (!groundHit.collider || Mathf.Abs(_rigidbody2D.linearVelocityY) > ApproximatelyZeroAcceleration)
             {
                 FlewUp?.Invoke();
                 return;
@@ -132,7 +132,7 @@ namespace Player.Control
             _isDashing = true;
             var originalGravity = _rigidbody2D.gravityScale;
             _rigidbody2D.gravityScale = 0f;
-            _rigidbody2D.velocity = new Vector2(_movementInput * dashForce, 0f);
+            _rigidbody2D.linearVelocity = new Vector2(_movementInput * dashForce, 0f);
             DashStateChanged?.Invoke(true);
 
             yield return new WaitForSeconds(dashTime);
