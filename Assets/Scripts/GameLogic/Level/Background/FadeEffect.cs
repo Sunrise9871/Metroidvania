@@ -3,11 +3,16 @@ using UnityEngine;
 
 namespace GameLogic.Level.Background
 {
-    public class FadeEffect : MonoBehaviour
+    public class SpaceDimmingEffect : MonoBehaviour
     {
+        [Tooltip("Что является землей")]
         [SerializeField] private Transform ground;
+
+        [Tooltip("До какой высоты объект будет сохранять свой цвет (alpha = 100%)")]
         [SerializeField] private float fullOpaqueHeight = 100f;
-        [SerializeField] private float fullTransparentHeight = 450f;    
+
+        [Tooltip("На какой высоте объект будет полностью черным (alpha = 0%)")]
+        [SerializeField] private float fullTransparentHeight = 450f;
 
         private Transform _camera;
         private SpriteRenderer _sprite;

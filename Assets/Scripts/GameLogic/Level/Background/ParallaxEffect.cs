@@ -5,6 +5,7 @@ namespace GameLogic.Level.Background
 {
     public class ParallaxEffect : MonoBehaviour
     {
+        [Tooltip("Сила эффекта паралакса, где 1 - объект следует за камерой, 0 - объект неподвижен")]
         [SerializeField] private float parallaxStrength = 0.1f;
         
         private Transform _camera;
