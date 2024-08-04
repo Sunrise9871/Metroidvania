@@ -3768,10 +3768,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3590619436048488049, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
-      propertyPath: maxHealth
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 5936428352355524001, guid: 672a45c6a9dc5364297ea952d739871d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.94
@@ -4911,17 +4907,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5657552493640560408, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
-      propertyPath: speed
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 6778897351537992184, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
       propertyPath: m_Name
       value: RedZone
-      objectReference: {fileID: 0}
-    - target: {fileID: 6778897351537992184, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8732995494446651179, guid: c8542004f786f6b488b31133b85d5a2b, type: 3}
       propertyPath: m_LocalPosition.x
