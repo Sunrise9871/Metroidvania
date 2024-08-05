@@ -17,7 +17,6 @@ namespace Player.Control
         private BulletSpawner _combinedPool;
         
         private GameStopScenario _stopScenario;
-        
         private Dictionary<TypeOfFire, BulletSpawner> _pools;
 
         private UnityEngine.Camera _camera;

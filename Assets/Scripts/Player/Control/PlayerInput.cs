@@ -9,13 +9,13 @@ namespace Player.Control
     [RequireComponent(typeof(Logic.Player))]
     public class PlayerInput : MonoBehaviour
     {
-        private GameStopScenario _stopScenario;
-        
         private bool _isPrimaryFirePressed;
         private bool _isSecondaryFirePressed;
         private bool _isCombinedFirePressed;
         private bool _wasCombinedFirePressed;
 
+        private GameStopScenario _stopScenario;
+        
         public PlayerInputActions PlayerInputActions { get; private set; }
 
         public event Action<TypeOfFire> Shot;
