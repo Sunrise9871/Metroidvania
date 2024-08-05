@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 6564164651320291068}
   - component: {fileID: 1078791418395326931}
   - component: {fileID: 5760654183471602617}
-  - component: {fileID: 3178050781261508585}
   m_Layer: 0
   m_Name: Background1
   m_TagString: Untagged
@@ -352,21 +351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxStrength: 1
---- !u!114 &3178050781261508585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7477963179573771460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e08df372c983499695e002d7a7900414, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ground: {fileID: 0}
-  fullOpaqueHeight: 100
-  fullTransparentHeight: 450
 --- !u!1 &7564588262863659926
 GameObject:
   m_ObjectHideFlags: 0
