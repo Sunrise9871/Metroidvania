@@ -13,16 +13,16 @@ namespace Player.Logic
 
         private GameStopScenario _stopScenario;
 
+        public int Health => health;
+
+        public event Action<int> Damaged;
+        public event Action Died;
+        
         private void Awake() => _stopScenario = FindAnyObjectByType<GameStopScenario>();
 
         private void OnEnable() => _stopScenario.GameStopped += OnGameStopped;
 
         private void OnDisable() => _stopScenario.GameStopped -= OnGameStopped;
-
-        public int Health => health;
-
-        public event Action<int> Damaged;
-        public event Action Died;
         
         public void ReceiveDamage(TypeOfFire typeOfFire)
         {
