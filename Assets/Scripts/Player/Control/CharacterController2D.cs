@@ -41,7 +41,7 @@ namespace Player.Control
 
         private bool _canDash = true;
         private bool _isDashing;
-
+        
         public bool IsGrounded { get; private set; }
 
         public event Action FlewUp;
@@ -62,6 +62,8 @@ namespace Player.Control
 
             _playerInput.PlayerInputActions.Player.Move.started += OnMove;
             _playerInput.PlayerInputActions.Player.Move.canceled += OnMove;
+            
+            _playerInput.PlayerInputActions.Player.Pause.started += Pause;
         }
 
         private void OnDisable()
@@ -139,6 +141,14 @@ namespace Player.Control
             _rigidbody2D.gravityScale = originalGravity;
             _isDashing = false;
             DashStateChanged?.Invoke(false);
+        }
+
+        private void Pause(InputAction.CallbackContext context)
+        {
+            if (Mathf.Approximately(Time.timeScale, 1f))
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
         }
     }
 }
