@@ -5,6 +5,7 @@ using GameLogic.Interfaces;
 using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Logic
@@ -28,11 +29,16 @@ namespace Enemy.Logic
 
         public event Action Damaged, Died, Healed;
         public event Action<EnemyTakingDamageState> StateChanged;
+        
+        [Inject]
+        private void Construct(GameStopScenario gameStopScenario)
+        {
+            _stopScenario = gameStopScenario;
+        }
 
         private void Awake()
         {
             _collider = GetComponent<CapsuleCollider2D>();
-            _stopScenario = FindAnyObjectByType<GameStopScenario>();
             _health = maxHealth;
         }
         

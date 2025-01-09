@@ -3,6 +3,7 @@ using GameLogic.Interfaces;
 using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Player.Logic
 {
@@ -18,8 +19,12 @@ namespace Player.Logic
         public event Action<int> Damaged;
         public event Action Died;
         
-        private void Awake() => _stopScenario = FindAnyObjectByType<GameStopScenario>();
-
+        [Inject]
+        private void Construct(GameStopScenario gameStopScenario)
+        {
+            _stopScenario = gameStopScenario;
+        }
+        
         private void OnEnable() => _stopScenario.GameStopped += OnGameStopped;
 
         private void OnDisable() => _stopScenario.GameStopped -= OnGameStopped;

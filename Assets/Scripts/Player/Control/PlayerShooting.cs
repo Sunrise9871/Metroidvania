@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Player.Control
 {
@@ -22,9 +23,14 @@ namespace Player.Control
         private UnityEngine.Camera _camera;
         private PlayerInput _playerInput;
 
+        [Inject]
+        private void Construct(GameStopScenario gameStopScenario)
+        {
+            _stopScenario = gameStopScenario;
+        }
+
         private void Awake()
         {
-            _stopScenario = FindAnyObjectByType<GameStopScenario>();
             _playerInput = GetComponent<PlayerInput>();
             _camera = UnityEngine.Camera.main;
             

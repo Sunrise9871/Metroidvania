@@ -3,6 +3,7 @@ using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Player.Control
 {
@@ -20,10 +21,15 @@ namespace Player.Control
 
         public event Action<TypeOfFire> Shot;
 
+        [Inject]
+        private void Construct(GameStopScenario gameStopScenario)
+        {
+            _stopScenario = gameStopScenario;
+        }
+
         private void Awake()
         {
             PlayerInputActions = new PlayerInputActions();
-            _stopScenario = FindAnyObjectByType<GameStopScenario>();
         }
 
         private void OnEnable()

@@ -3,6 +3,7 @@ using Enemy.EnemyStages;
 using GameLogic.MainLogic;
 using Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Enemy.Logic
 {
@@ -28,13 +29,18 @@ namespace Enemy.Logic
         private EnemyStage _enemyStage;
         private Enemy _enemy;
         private GameStopScenario _stopScenario;
+        
+        [Inject]
+        private void Construct(GameStopScenario gameStopScenario)
+        {
+            _stopScenario = gameStopScenario;
+        }
 
         private void Awake()
         {
             _enemyStage = _easyEnemyStage;
             _bulletPool = new BulletSpawner(pfBullet);
             _enemy = GetComponent<Enemy>();
-            _stopScenario = FindAnyObjectByType<GameStopScenario>();
         }
 
         private void Start() => StartCoroutine(nameof(Shoot));
